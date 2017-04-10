@@ -83,7 +83,10 @@ public class Book {
     }
 
     public boolean isAValidBook(Book book) {
-        if (book == null) System.out.print(EMenu.BOOK_NOT_EXISTS.toString());
+        if (book == null) {
+            System.out.print(EMenu.BOOK_NOT_EXISTS.toString());
+            return false;
+        }
         return true;
     }
 

@@ -40,12 +40,13 @@ public class Menu {
 
     public void startMenu(String option) throws ParserConfigurationException, SAXException, IOException {
         String response = menuOption(option);
-        String input = getInputStream();
         if (response.equals(EMenu.OPTION_THREE.name()) || response.equals(EMenu.OPTION_FOUR.name())) {
+            String input = getInputStream();
             Book book = new Book().isBookInBooks(books, input);
             updateAvailableBooks(response, book);
             startMenu(EMenu.OPTION_ZERO.toString());
         } else if (!response.equals(EMenu.OPTION_TWO.name())) {
+            String input = getInputStream();
             System.out.println(response);
             startMenu(input);
         }
@@ -53,11 +54,11 @@ public class Menu {
 
     public void updateAvailableBooks (String option, Book book) throws IOException, SAXException, ParserConfigurationException {
         if (option.equals(EMenu.OPTION_THREE.name())) {
-            book.checkoutBook(book);
-            availableBooks = book.checkoutBook(availableBooks, book);
+            new Book().checkoutBook(book);
+            availableBooks = new Book().checkoutBook(availableBooks, book);
         } else if (option.equals(EMenu.OPTION_FOUR.name())) {
-            book.returnBook(book);
-            availableBooks = book.returnBook(availableBooks, book);
+            new Book().returnBook(book);
+            availableBooks = new Book().returnBook(availableBooks, book);
         }
     }
 

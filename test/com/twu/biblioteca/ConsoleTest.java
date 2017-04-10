@@ -118,10 +118,13 @@ public class ConsoleTest {
 
     @Test
     public void shouldReturnBookDoesNotExitWhenUserTryToCheckoutANoExistentBook() throws IOException, SAXException, ParserConfigurationException {
-        String expect = EMenu.BOOK_NOT_EXISTS.toString();
-        new Book().isAValidBook(null);
+        String expectedMessage = EMenu.BOOK_NOT_EXISTS.toString();
 
-        assertEquals(expect, outContent.toString());
+        boolean expected = false;
+        boolean actual = new Book().isAValidBook(null);
+
+        assertEquals(expectedMessage, outContent.toString());
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -138,13 +141,5 @@ public class ConsoleTest {
         new Book().returnBook(bookAvailable);
 
         assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void shouldReturnBookDoesNotExitWhenUserTryToReturnAnNoExistentBook() throws IOException, SAXException, ParserConfigurationException {
-        String expect = EMenu.BOOK_NOT_EXISTS.toString();
-        new Book().isAValidBook(null);
-
-        assertEquals(expect, outContent.toString());
     }
 }
