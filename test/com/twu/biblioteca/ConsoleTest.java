@@ -46,12 +46,12 @@ public class ConsoleTest {
     @Test
     public void shouldShowTheBookList() throws IOException, SAXException, ParserConfigurationException {
         Menu menu = new Menu();
-        List<Book> books = Book.getBooks(file);
+        List<Book> books = new Book().getBooks(file);
 
         String expected = EMenu.SHOW_BOOKS.toString();
-        expected += Book.formatBookInformation(EMenu.TITLE.name(), EMenu.AUTHOR.name(), EMenu.YEAR.name());
+        expected += new Book().formatBookInformation(EMenu.TITLE.name(), EMenu.AUTHOR.name(), EMenu.YEAR.name());
         for (Book book: books) {
-            expected += Book.formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear());
+            expected += new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear());
         }
         new Menu().menuOption(EMenu.OPTION_ONE.toString());
 
@@ -94,7 +94,7 @@ public class ConsoleTest {
 
     @Test
     public void shouldReturnQuitWhenIExitOfTheApp() throws ParserConfigurationException, SAXException, IOException {
-        String expect = EMenu.QUIT.toString();
+        String expect = EMenu.OPTION_TWO.name();
         String actual = new Menu().menuOption(EMenu.OPTION_TWO.toString());
 
         assertEquals(expect, actual);
@@ -103,7 +103,7 @@ public class ConsoleTest {
     @Test
     public void shouldReturnThankYouEnjoyTheBookWhenUserDoASuccessfulCheckout() throws ParserConfigurationException, SAXException, IOException {
         String expect = EMenu.ENJOY_THE_BOOK.toString();
-        Book.checkoutBook(bookAvailable);
+        new Book().checkoutBook(bookAvailable);
 
         assertEquals(expect, outContent.toString());
     }
@@ -111,10 +111,40 @@ public class ConsoleTest {
     @Test
     public void shouldReturnBookIsNotAvailableWhenUserDoAUnsuccessfulCheckout() throws IOException, SAXException, ParserConfigurationException {
         String expect = EMenu.BOOK_NO_AVAILABLE.toString();
-        Book.checkoutBook(bookNoAvailable);
+        new Book().checkoutBook(bookNoAvailable);
 
         assertEquals(expect, outContent.toString());
     }
 
+    @Test
+    public void shouldReturnBookDoesNotExitWhenUserTryToCheckoutANoExistentBook() throws IOException, SAXException, ParserConfigurationException {
+        String expect = EMenu.BOOK_NOT_EXISTS.toString();
+        new Book().isAValidBook(null);
 
+        assertEquals(expect, outContent.toString());
+    }
+
+    @Test
+    public void shouldReturnThankYouForRetuningTheBookWhenTheTheReturningIsSuccessful() throws Exception {
+        String expected = EMenu.THANK_YOU_FOR_RETURNING.toString();
+        new Book().returnBook(bookNoAvailable);
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void shouldReturnInvalidRetuningWhenTheTheReturningIsUnsuccessful() throws Exception {
+        String expected = EMenu.INVALID_RETURN.toString();
+        new Book().returnBook(bookAvailable);
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void shouldReturnBookDoesNotExitWhenUserTryToReturnAnNoExistentBook() throws IOException, SAXException, ParserConfigurationException {
+        String expect = EMenu.BOOK_NOT_EXISTS.toString();
+        new Book().isAValidBook(null);
+
+        assertEquals(expect, outContent.toString());
+    }
 }

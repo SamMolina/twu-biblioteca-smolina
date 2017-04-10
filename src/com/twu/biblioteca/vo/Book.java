@@ -46,12 +46,12 @@ public class Book {
         this.checkout = checkout;
     }
 
-    public static List<Book> getBooks(String fileName) throws ParserConfigurationException, SAXException, IOException {
+    public List<Book> getBooks(String fileName) throws ParserConfigurationException, SAXException, IOException {
         List<Book> books = new DOMParser().parserFile(fileName);
         return books;
     }
 
-    public static List<Book> getAvailableBooks(List<Book> books) {
+    public List<Book> getAvailableBooks(List<Book> books) {
         List<Book> availableBooks = new ArrayList<>();
         for (Book book: books) {
             if (book.getCheckout() == false)
@@ -60,7 +60,7 @@ public class Book {
         return availableBooks;
     }
 
-    public static void showBooks(List<Book> books) {
+    public void showBooks(List<Book> books) {
         System.out.print(EMenu.SHOW_BOOKS);
         System.out.print(formatBookInformation(EMenu.TITLE.name(), EMenu.AUTHOR.name(),EMenu.YEAR.name()));
         for (Book book: books) {
@@ -68,28 +68,60 @@ public class Book {
         }
     }
 
-    public static boolean isBookInBooks(List<Book> books, Book bookToSearch) {
+    public boolean isBookInBooks(List<Book> books, Book bookToSearch) {
         for (Book book: books) {
             if (book.equals(bookToSearch)) return true;
         }
         return false;
     }
 
-    public static Book isBookInBooks(List<Book> books, String bookToSearch) {
+    public Book isBookInBooks(List<Book> books, String bookToSearch) {
         for (Book book: books) {
             if (book.getTitle().equals(bookToSearch)) return book;
         }
         return null;
     }
 
-    public static Book checkoutBook(Book book) throws ParserConfigurationException, SAXException, IOException {
-        if (book.getCheckout() == false) {
-            book.setCheckout(true);
-            System.out.print(EMenu.ENJOY_THE_BOOK.toString());
-        } else {
-            System.out.print(EMenu.BOOK_NO_AVAILABLE.toString());
+    public boolean isAValidBook(Book book) {
+        if (book == null) System.out.print(EMenu.BOOK_NOT_EXISTS.toString());
+        return true;
+    }
+
+    public void changeCheckoutBook (Book book, boolean checkout, String message) {
+        book.setCheckout(checkout);
+        System.out.print(message);
+    }
+
+    public Book checkoutBook(Book book) throws ParserConfigurationException, SAXException, IOException {
+        if (isAValidBook(book)) {
+            if (book.getCheckout() == false) {
+                changeCheckoutBook(book, !book.getCheckout(), EMenu.ENJOY_THE_BOOK.toString());
+            } else {
+                changeCheckoutBook(book, book.getCheckout(), EMenu.BOOK_NO_AVAILABLE.toString());
+            }
         }
         return book;
+    }
+
+    public Book returnBook(Book book) {
+        if (isAValidBook(book)) {
+            if (book.getCheckout() == true) {
+                changeCheckoutBook(book, !book.getCheckout(), EMenu.THANK_YOU_FOR_RETURNING.toString());
+            } else {
+                changeCheckoutBook(book, book.getCheckout(), EMenu.INVALID_RETURN.toString());
+            }
+        }
+        return book;
+    }
+
+    public List<Book> checkoutBook(List<Book> books, Book book) {
+        books.remove(book);
+        return books;
+    }
+
+    public List<Book> returnBook(List<Book> books, Book book) {
+        books.add(book);
+        return books;
     }
 
     @Override
@@ -103,14 +135,9 @@ public class Book {
         return book.title.equals(title) && book.author.equals(author) && book.year.equals(year);
     }
 
-    public static String formatBookInformation(String title, String author, String year) {
+    public String formatBookInformation(String title, String author, String year) {
         return "|" + new Menu().printWhiteSpaces(title, 30) +
                 "|" + new Menu().printWhiteSpaces(author, 30) +
                 "|" + year + "|\n";
-    }
-
-    public static List<Book> removeCheckoutsFromBooks(List<Book> books, Book book) {
-        books.remove(book);
-        return books;
     }
 }

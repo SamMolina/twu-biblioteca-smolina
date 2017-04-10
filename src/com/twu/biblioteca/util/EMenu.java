@@ -3,6 +3,9 @@ package com.twu.biblioteca.util;
 public enum EMenu {
     BOOK("book"),
     BOOK_FILE("books.xml"),
+    BOOK_NO_AVAILABLE("That book is not available.\n"),
+    BOOK_NOT_EXISTS("That Book doesn't exists!\n"),
+
     TITLE("title"),
     AUTHOR("author"),
     YEAR("year"),
@@ -18,14 +21,19 @@ public enum EMenu {
     OPTION_THREE_FULL("3. Checkout book\n"),
     OPTION_FOUR_FULL("4. Return book\n"),
 
+    BLANK_SPACE(" "),
+    LINE_BREAK("\n"),
+
     WELCOME_MESSAGE("==== Welcome to the TWU Biblioteca App ===\n"),
     CHOOSE_OPTIONS("Choose one of the following options:\n"),
     SHOW_BOOKS("The books list is showing below:\n"),
     SELECT_A_VALID_OPTION("Select a valid option!\n"),
+
     ENJOY_THE_BOOK("Thank you! Enjoy the book\n"),
-    BOOK_NO_AVAILABLE("That book is not available.\n"),
-    BOOK_NOT_EXISTS("That Book doesn't exists!\n"),
-    QUIT("Quit");
+    ENTER_THE_BOOK_NAME("Enter the book name:"),
+
+    THANK_YOU_FOR_RETURNING("Thank you for returning the book.\n"),
+    INVALID_RETURN("That is not a valid book to return.\n");
 
     private final String name;
 

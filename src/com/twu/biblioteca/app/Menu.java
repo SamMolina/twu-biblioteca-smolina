@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Menu {
     private List<Book> books = new ArrayList<>();
+    private List<Book> availableBooks = new ArrayList<>();
     boolean fillBooks = true;
 
     public void sayHello(String welcomeMessage) {
@@ -21,13 +22,13 @@ public class Menu {
 
     public void printLines(int numberLineBreak) {
         for (int lines = 0; lines < numberLineBreak; lines ++)
-            System.out.println();
+            System.out.print(EMenu.LINE_BREAK);
     }
 
     public String printWhiteSpaces(String word, int length) {
         int numCharacters = word.length();
         for (int iterator = numCharacters; iterator < length; iterator ++) {
-            word += " ";
+            word += EMenu.BLANK_SPACE.toString();
         }
         return word;
     }
@@ -38,47 +39,38 @@ public class Menu {
     }
 
     public void startMenu(String option) throws ParserConfigurationException, SAXException, IOException {
-        if (option.equals(EMenu.OPTION_ZERO.toString()) || option.equals(EMenu.OPTION_ONE.toString())) {
-            menuOption(option);
-            option = getInputStream();
-            startMenu(option);
-        } else if (option.equals(EMenu.OPTION_TWO.toString())) {
-            String response = menuOption(option);
-            System.out.println(response);
-        } else if (option.equals(EMenu.OPTION_THREE.toString())) {
-            System.out.println("Enter the book name:");
-            String bookName = getInputStream();
-            Book book = Book.isBookInBooks(books, bookName);
-            checkoutBook(book);
-            books = Book.removeCheckoutsFromBooks(books, book);
+        String response = menuOption(option);
+        String input = getInputStream();
+        if (response.equals(EMenu.OPTION_THREE.name()) || response.equals(EMenu.OPTION_FOUR.name())) {
+            Book book = new Book().isBookInBooks(books, input);
+            updateAvailableBooks(response, book);
             startMenu(EMenu.OPTION_ZERO.toString());
-        } else {
-            String response = menuOption(option);
+        } else if (!response.equals(EMenu.OPTION_TWO.name())) {
             System.out.println(response);
-            startMenu(EMenu.OPTION_ZERO.toString());
+            startMenu(input);
+        }
+    }
+
+    public void updateAvailableBooks (String option, Book book) throws IOException, SAXException, ParserConfigurationException {
+        if (option.equals(EMenu.OPTION_THREE.name())) {
+            book.checkoutBook(book);
+            availableBooks = book.checkoutBook(availableBooks, book);
+        } else if (option.equals(EMenu.OPTION_FOUR.name())) {
+            book.returnBook(book);
+            availableBooks = book.returnBook(availableBooks, book);
         }
     }
 
     private void fillBooks() throws IOException, SAXException, ParserConfigurationException {
         if (fillBooks == true) {
-            books = Book.getBooks(EMenu.BOOK_FILE.toString());
+            books = new Book().getBooks(EMenu.BOOK_FILE.toString());
+            availableBooks = new Book().getBooks(EMenu.BOOK_FILE.toString());
             fillBooks = false;
         }
     }
 
-    public String checkoutBook(Book book) throws IOException, SAXException, ParserConfigurationException {
-        if (book != null) {
-            Book.checkoutBook(book);
-            return null;
-        } else {
-            System.out.print(EMenu.BOOK_NOT_EXISTS.toString());
-            startMenu(EMenu.OPTION_THREE.toString());
-            return EMenu.BOOK_NOT_EXISTS.toString();
-        }
-    }
-
     public String menuOption(String option) throws IOException, SAXException, ParserConfigurationException {
-        String response = null;
+        String response = "";
         switch (option) {
             case "0":
                 System.out.print(EMenu.CHOOSE_OPTIONS.toString()
@@ -90,11 +82,21 @@ public class Menu {
 
             case "1":
                 fillBooks();
-                Book.showBooks(books);
+                new Book().showBooks(availableBooks);
                 break;
 
             case "2":
-                response = EMenu.QUIT.toString();
+                response = EMenu.OPTION_TWO.name();
+                break;
+
+            case "3":
+                System.out.println(EMenu.ENTER_THE_BOOK_NAME.toString());
+                response = EMenu.OPTION_THREE.name();
+                break;
+
+            case "4":
+                System.out.println(EMenu.ENTER_THE_BOOK_NAME);
+                response = EMenu.OPTION_FOUR.name();
                 break;
 
             default:
