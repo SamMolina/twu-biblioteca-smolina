@@ -42,7 +42,7 @@ public class Menu {
         String response = menuOption(option);
         String input = getInputStream();
         if (response.equals(com.twu.biblioteca.app.util.Menu.OPTION_THREE.name()) || response.equals(com.twu.biblioteca.app.util.Menu.OPTION_FOUR.name())) {
-            Book book = new BookService().isBookInBooks(books, input);
+            Book book = (Book) new BookService().isAssetInAssets(books, input);
             updateAvailableBooks(response, book);
             startMenu(com.twu.biblioteca.app.util.Menu.OPTION_ZERO.toString());
         } else if (!response.equals(com.twu.biblioteca.app.util.Menu.OPTION_TWO.name())) {
@@ -53,18 +53,18 @@ public class Menu {
 
     public void updateAvailableBooks (String option, Book book) {
         if (option.equals(com.twu.biblioteca.app.util.Menu.OPTION_THREE.name())) {
-            new BookService().checkoutBook(book);
-            availableBooks = new BookService().checkoutBook(availableBooks, book);
+            new BookService().checkoutAsset(book);
+            availableBooks = new BookService().checkoutAsset(availableBooks, book);
         } else if (option.equals(com.twu.biblioteca.app.util.Menu.OPTION_FOUR.name())) {
-            new BookService().returnBook(book);
-            availableBooks = new BookService().returnBook(availableBooks, book);
+            new BookService().returnAsset(book);
+            availableBooks = new BookService().returnAsset(availableBooks, book);
         }
     }
 
     private void fillBooks() throws IOException, SAXException, ParserConfigurationException {
         if (fillBooks == true) {
-            books = new BookService().getBooks(com.twu.biblioteca.app.util.Menu.BOOK_FILE.toString());
-            availableBooks = new BookService().getBooks(com.twu.biblioteca.app.util.Menu.BOOK_FILE.toString());
+            books = new BookService().getAssets(com.twu.biblioteca.app.util.Menu.BOOK_FILE.toString());
+            availableBooks = new BookService().getAssets(com.twu.biblioteca.app.util.Menu.BOOK_FILE.toString());
             fillBooks = false;
         }
     }
@@ -82,7 +82,7 @@ public class Menu {
 
             case "1":
                 fillBooks();
-                new BookService().showBooks(availableBooks);
+                new BookService().showAssets(availableBooks);
                 break;
 
             case "2":

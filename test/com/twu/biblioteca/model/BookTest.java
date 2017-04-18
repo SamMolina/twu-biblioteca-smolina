@@ -43,42 +43,42 @@ public class BookTest {
 
     @Test
     public void shouldReturnTrueWhenSearchingABookThatIsInBooks() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getBooks(fileName);
+        List<Book> books = new BookService().getAssets(fileName);
         Book bookToSearch = bookAvailable;
 
         boolean expected = true;
-        boolean actual = new BookService().isBookInBooks(books, bookToSearch);
+        boolean actual = new BookService().isAssetInAssets(books, bookToSearch);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnFalseWhenSearchingABookThatNoIsInBooks() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getBooks(fileName);
+        List<Book> books = new BookService().getAssets(fileName);
         Book bookToSearch = bookAvailable;
         bookToSearch.setTitle(bookUnavailable);
 
         boolean expected = false;
-        boolean actual = new BookService().isBookInBooks(books, bookToSearch);
+        boolean actual = new BookService().isAssetInAssets(books, bookToSearch);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnABookUsingTheNameOfTheBook() throws Exception {
-        List<Book> books = new BookService().getBooks(Menu.BOOK_FILE.toString());
+        List<Book> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
 
         Book bookExpected = bookAvailable;
-        Book bookActual = new BookService().isBookInBooks(books, bookAvailable.getTitle());
+        Book bookActual = (Book) new BookService().isAssetInAssets(books, bookAvailable.getTitle());
 
         assertEquals(bookExpected, bookActual);
     }
 
     @Test
     public void shouldReturnNullWhenEnteringABookNameThatNoIsInTheList() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getBooks(Menu.BOOK_FILE.toString());
+        List<Book> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
 
-        Book bookActual = new BookService().isBookInBooks(books, bookUnavailable);
+        Book bookActual = (Book) new BookService().isAssetInAssets(books, bookUnavailable);
 
         assertNull(bookActual);
     }

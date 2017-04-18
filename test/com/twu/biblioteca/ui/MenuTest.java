@@ -47,7 +47,7 @@ public class MenuTest {
     @Test
     public void shouldShowTheBookList() throws IOException, SAXException, ParserConfigurationException {
         com.twu.biblioteca.app.ui.Menu menu = new com.twu.biblioteca.app.ui.Menu();
-        List<Book> books = new BookService().getBooks(file);
+        List<Book> books = new BookService().getAssets(file);
 
         String expected = Menu.SHOW_BOOKS.toString();
         expected += new Book().formatBookInformation(Menu.TITLE.name(), Menu.AUTHOR.name(), Menu.YEAR.name());
@@ -94,7 +94,7 @@ public class MenuTest {
     @Test
     public void shouldReturnThankYouEnjoyTheBookWhenUserDoASuccessfulCheckout() throws ParserConfigurationException, SAXException, IOException {
         String expect = Menu.ENJOY_THE_BOOK.toString();
-        new BookService().checkoutBook(bookAvailable);
+        new BookService().checkoutAsset(bookAvailable);
 
         assertEquals(expect, outContent.toString());
     }
@@ -102,7 +102,7 @@ public class MenuTest {
     @Test
     public void shouldReturnBookIsNotAvailableWhenUserDoAUnsuccessfulCheckout() throws IOException, SAXException, ParserConfigurationException {
         String expect = Menu.BOOK_NO_AVAILABLE.toString();
-        new BookService().checkoutBook(bookNoAvailable);
+        new BookService().checkoutAsset(bookNoAvailable);
 
         assertEquals(expect, outContent.toString());
     }
@@ -118,7 +118,7 @@ public class MenuTest {
     @Test
     public void shouldReturnThankYouForRetuningTheBookWhenTheTheReturningIsSuccessful() throws Exception {
         String expected = Menu.THANK_YOU_FOR_RETURNING.toString();
-        new BookService().returnBook(bookNoAvailable);
+        new BookService().returnAsset(bookNoAvailable);
 
         assertEquals(expected, outContent.toString());
     }
@@ -126,7 +126,7 @@ public class MenuTest {
     @Test
     public void shouldReturnInvalidRetuningWhenTheTheReturningIsUnsuccessful() throws Exception {
         String expected = Menu.INVALID_RETURN.toString();
-        new BookService().returnBook(bookAvailable);
+        new BookService().returnAsset(bookAvailable);
 
         assertEquals(expected, outContent.toString());
     }

@@ -1,26 +1,31 @@
 package com.twu.biblioteca.app.service;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
+import java.util.*;
 
-public interface Asset {
+public interface Asset<T> {
 
-    public List<Object> getAssets(String fileName);
+    public List<T> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException;
 
-    public List<Object> getAvailableAssets(List<Object> assets);
+    public List<T> getAvailableAssets(List<T> assets);
 
-    public void showAssets(List<Object> assets);
+    public void showAssets(List<T> assets);
 
-    public boolean isAssetInAssets(List<Object> assets, Object assetToSearch);
+    public boolean isAssetInAssets(List<T> assets, Object assetToSearch);
 
-    public Object isAssetInAssets(List<Object> assets, String assetToSearch);
+    public T isAssetInAssets(List<T> assets, String assetToSearch);
 
-    public Object checkoutAsset(Object object);
+    public T checkoutAsset(T asset);
 
-    public Object returnAsset(Object object);
+    public T returnAsset(T asset);
 
-    public void updateCheckoutBook(Object object, boolean checkout, String message);
+    public void updateCheckoutAsset(T asset, boolean checkout, String message);
 
-    public List<Object> checkoutBook(List<Object> objects, Object object);
+    public List<T> checkoutAsset(List<T> assets, T assetToCheckout);
 
-    public List<Object> returnBook(List<Object> objects, Object object);
+    public List<T> returnAsset(List<T> assets, T assetToReturn);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ManagerBookTest {
+public class BookServiceTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Book bookAvailableOne, bookAvailableTwo, bookNoAvailable;
     private String fileName;
@@ -30,7 +30,7 @@ public class ManagerBookTest {
     @Test
     public void shouldModifyTheCheckoutValueFromABookWhenCheckingOutABook() throws Exception {
         boolean expect = true;
-        Book book = manager.checkoutBook(bookAvailableOne);
+        Book book = (Book) manager.checkoutAsset(bookAvailableOne);
 
         assertEquals(expect, book.getCheckout());
     }
@@ -38,31 +38,31 @@ public class ManagerBookTest {
     @Test
     public void shouldNoModifyCheckoutValueFromABookWhenReturnABook() throws Exception {
         boolean expected = false;
-        Book book = new BookService().returnBook(bookNoAvailable);
+        Book book = (Book) new BookService().returnAsset(bookNoAvailable);
 
         assertEquals(expected, book.getCheckout());
     }
 
     @Test
     public void shouldRemoveTheCheckoutBooksFromAvailableBooks() throws Exception {
-        List<Book> books = new BookService().getBooks(fileName);
-        List<Book> booksAvailableExpected = new BookService().getBooks(fileName);
+        List<Book> books = new BookService().getAssets(fileName);
+        List<Book> booksAvailableExpected = new BookService().getAssets(fileName);
 
         booksAvailableExpected.remove(bookAvailableOne);
 
         books.get(0).setCheckout(true);
 
-        List<Book> booksAvailableActual = manager.getAvailableBooks(books);
+        List<Book> booksAvailableActual = manager.getAvailableAssets(books);
 
         assertEquals(booksAvailableExpected, booksAvailableActual);
     }
 
     @Test
     public void shouldRefreshBooksWhenCheckoutABook() throws Exception {
-        List<Book> booksExpected = new BookService().getBooks(Menu.BOOK_FILE.toString());
-        Book book = new BookService().checkoutBook(bookAvailableOne);
+        List<Book> booksExpected = new BookService().getAssets(Menu.BOOK_FILE.toString());
+        Book book = (Book) new BookService().checkoutAsset(bookAvailableOne);
 
-        List<Book> booksActual = new BookService().checkoutBook(booksExpected, book);
+        List<Book> booksActual = new BookService().checkoutAsset(booksExpected, book);
         booksExpected.remove(bookAvailableOne);
 
         assertEquals(booksExpected, booksActual);
@@ -70,15 +70,15 @@ public class ManagerBookTest {
 
     @Test
     public void shouldRefreshBooksWhenReturnABook() throws Exception {
-        List<Book> booksExpected = new BookService().getBooks(Menu.BOOK_FILE.toString());
+        List<Book> booksExpected = new BookService().getAssets(Menu.BOOK_FILE.toString());
         List<Book> booksActual;
-        Book bookOne = new BookService().checkoutBook(bookAvailableOne);
-        Book bookTwo = new BookService().checkoutBook(bookAvailableTwo);
+        Book bookOne = (Book) new BookService().checkoutAsset(bookAvailableOne);
+        Book bookTwo = (Book) new BookService().checkoutAsset(bookAvailableTwo);
 
-        booksActual = new BookService().checkoutBook(booksExpected, bookOne);
-        booksActual = new BookService().checkoutBook(booksActual, bookTwo);
+        booksActual = new BookService().checkoutAsset(booksExpected, bookOne);
+        booksActual = new BookService().checkoutAsset(booksActual, bookTwo);
 
-        booksActual = new BookService().returnBook(booksActual, bookOne);
+        booksActual = new BookService().returnAsset(booksActual, bookOne);
         booksExpected.remove(bookAvailableTwo);
 
         assertEquals(booksExpected, booksActual);

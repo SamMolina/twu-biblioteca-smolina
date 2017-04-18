@@ -10,77 +10,93 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService implements Asset {
-
-    public List<Book> getBooks(String fileName) throws ParserConfigurationException, SAXException, IOException {
+    @Override
+    public List<Book> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
         List<Book> books = new XMLFileParser().parserFile(fileName);
         return books;
     }
 
-    public boolean isBookInBooks(List<Book> books, Book bookToSearch) {
-        for (Book book: books) {
-            if (book.equals(bookToSearch)) return true;
-        }
-        return false;
-    }
-
-    public Book isBookInBooks(List<Book> books, String bookToSearch) {
-        for (Book book: books) {
-            if (book.getTitle().equals(bookToSearch)) return book;
-        }
-        return null;
-    }
-
-    public List<Book> getAvailableBooks(List<Book> books) {
+    @Override
+    public List<Book> getAvailableAssets(List assets) {
         List<Book> availableBooks = new ArrayList<>();
-        for (Book book: books) {
+        for (Object asset: assets) {
+            Book book = (Book) asset;
             if (book.getCheckout() == false)
                 availableBooks.add(book);
         }
         return availableBooks;
     }
 
-    public void showBooks(List<Book> books) {
+    @Override
+    public void showAssets(List assets) {
         System.out.print(Menu.SHOW_BOOKS);
         System.out.print(new Book().formatBookInformation(Menu.TITLE.name(), Menu.AUTHOR.name(), Menu.YEAR.name()));
-        for (Book book: books) {
+        for (Object asset: assets) {
+            Book book = (Book) asset;
             System.out.print(new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear()));
         }
     }
 
-    public Book checkoutBook(Book book) {
+    @Override
+    public boolean isAssetInAssets(List assets, Object assetToSearch) {
+        for (Object asset: assets) {
+            Book book = (Book) asset;
+            if (book.equals((Book) assetToSearch)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Object isAssetInAssets(List assets, String assetToSearch) {
+        for (Object asset: assets) {
+            Book book = (Book) asset;
+            if (book.getTitle().equals(assetToSearch)) return book;
+        }
+        return null;
+    }
+
+    @Override
+    public Object checkoutAsset(Object asset) {
+        Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == false) {
-                updateCheckoutBook(book, !book.getCheckout(), com.twu.biblioteca.app.util.Menu.ENJOY_THE_BOOK.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), com.twu.biblioteca.app.util.Menu.ENJOY_THE_BOOK.toString());
             } else {
-                updateCheckoutBook(book, book.getCheckout(), com.twu.biblioteca.app.util.Menu.BOOK_NO_AVAILABLE.toString());
+                updateCheckoutAsset(book, book.getCheckout(), com.twu.biblioteca.app.util.Menu.BOOK_NO_AVAILABLE.toString());
             }
         }
         return book;
     }
 
-    public Book returnBook(Book book) {
+    @Override
+    public Object returnAsset(Object asset) {
+       Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == true) {
-                updateCheckoutBook(book, !book.getCheckout(), Menu.THANK_YOU_FOR_RETURNING.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), Menu.THANK_YOU_FOR_RETURNING.toString());
             } else {
-                updateCheckoutBook(book, book.getCheckout(), Menu.INVALID_RETURN.toString());
+                updateCheckoutAsset(book, book.getCheckout(), Menu.INVALID_RETURN.toString());
             }
         }
         return book;
     }
 
-    public void updateCheckoutBook(Book book, boolean checkout, String message) {
+    @Override
+    public void updateCheckoutAsset(Object asset, boolean checkout, String message) {
+        Book book = (Book) asset;
         book.setCheckout(checkout);
         System.out.print(message);
     }
 
-    public List<Book> checkoutBook(List<Book> books, Book book) {
-        books.remove(book);
-        return books;
+    @Override
+    public List checkoutAsset(List assets, Object assetToCheckout) {
+        assets.remove(assetToCheckout);
+        return assets;
     }
 
-    public List<Book> returnBook(List<Book> books, Book book) {
-        books.add(book);
-        return books;
+    @Override
+    public List returnAsset(List assets, Object assetToReturn) {
+        assets.add(assetToReturn);
+        return assets;
     }
 }
