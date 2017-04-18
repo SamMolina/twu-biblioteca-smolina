@@ -1,4 +1,4 @@
-package com.twu.biblioteca.app.BibliotecaApp;
+package com.twu.biblioteca.app.Biblioteca;
 
 import com.twu.biblioteca.app.util.Menu;
 import org.xml.sax.SAXException;

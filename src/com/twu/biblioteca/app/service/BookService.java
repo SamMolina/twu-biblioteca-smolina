@@ -11,8 +11,8 @@ import java.util.List;
 
 public class BookService implements Asset {
     @Override
-    public List<Book> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Book> books = new XMLFileParser().parserFile(fileName);
+    public List<Object> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
+        List<Object> books = new XMLFileParser().parserFile(fileName, com.twu.biblioteca.app.util.Menu.BOOK.toString());
         return books;
     }
 

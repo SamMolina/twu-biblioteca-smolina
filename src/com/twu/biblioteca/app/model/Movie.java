@@ -34,11 +34,17 @@ public class Movie {
         return checkout;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCheckout(boolean checkout) {
+        this.checkout = checkout;
+    }
+
     @Override
     public boolean equals(Object object) {
         Movie movie = (Movie) object;
         return name.equals(movie.getName()) && year.equals(movie.getYear()) && director.equals(movie.getDirector()) && movie.rating == rating;
     }
-
-
 }

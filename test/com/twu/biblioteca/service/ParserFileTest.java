@@ -85,7 +85,7 @@ public class ParserFileTest {
 
     @Test
     public void shouldReturnBooksListWhenReadTheXMLBooksDocument() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new ArrayList<>();
+        List<Object> books = new ArrayList<>();
 
         Document bookDocument = parser.parserDocument(parser.createXMLFile(bookFileName));
 
@@ -95,7 +95,7 @@ public class ParserFileTest {
     @Test
     public void shouldReturnMoviesListWhenReadTheXMLMoviesDocument() throws IOException, SAXException, ParserConfigurationException {
         Document movieDocument = parser.parserDocument(parser.createXMLFile(movieFileName));
-        List<Movie> movies = new ArrayList<>();
+        List<Object> movies = new ArrayList<>();
 
         Mockito.when(parser.readDocumentMovie(movieDocument)).thenReturn(movies);
     }

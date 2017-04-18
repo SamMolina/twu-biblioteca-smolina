@@ -43,7 +43,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnTrueWhenSearchingABookThatIsInBooks() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getAssets(fileName);
+        List<Object> books = new BookService().getAssets(fileName);
         Book bookToSearch = bookAvailable;
 
         boolean expected = true;
@@ -54,7 +54,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnFalseWhenSearchingABookThatNoIsInBooks() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getAssets(fileName);
+        List<Object> books = new BookService().getAssets(fileName);
         Book bookToSearch = bookAvailable;
         bookToSearch.setTitle(bookUnavailable);
 
@@ -66,7 +66,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnABookUsingTheNameOfTheBook() throws Exception {
-        List<Book> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
+        List<Object> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
 
         Book bookExpected = bookAvailable;
         Book bookActual = (Book) new BookService().isAssetInAssets(books, bookAvailable.getTitle());
@@ -76,7 +76,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnNullWhenEnteringABookNameThatNoIsInTheList() throws IOException, SAXException, ParserConfigurationException {
-        List<Book> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
+        List<Object> books = new BookService().getAssets(Menu.BOOK_FILE.toString());
 
         Book bookActual = (Book) new BookService().isAssetInAssets(books, bookUnavailable);
 

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private List<Book> books = new ArrayList<>();
-    private List<Book> availableBooks = new ArrayList<>();
+    private List<Object> books = new ArrayList<>();
+    private List<Object> availableBooks = new ArrayList<>();
     boolean fillBooks = true;
 
     public void sayHello(String welcomeMessage) {

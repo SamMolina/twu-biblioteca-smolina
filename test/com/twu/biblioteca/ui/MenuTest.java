@@ -47,11 +47,12 @@ public class MenuTest {
     @Test
     public void shouldShowTheBookList() throws IOException, SAXException, ParserConfigurationException {
         com.twu.biblioteca.app.ui.Menu menu = new com.twu.biblioteca.app.ui.Menu();
-        List<Book> books = new BookService().getAssets(file);
+        List<Object> assets = new BookService().getAssets(file);
 
         String expected = Menu.SHOW_BOOKS.toString();
         expected += new Book().formatBookInformation(Menu.TITLE.name(), Menu.AUTHOR.name(), Menu.YEAR.name());
-        for (Book book: books) {
+        for (Object asset: assets) {
+            Book book = (Book) asset;
             expected += new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear());
         }
         new com.twu.biblioteca.app.ui.Menu().menuOption(Menu.OPTION_ONE.toString());

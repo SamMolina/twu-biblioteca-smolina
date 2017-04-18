@@ -22,10 +22,17 @@ public class XMLFileParser {
         return  xmlFile;
     }
 
-    public List<Book> parserFile(String file) throws IOException, SAXException, ParserConfigurationException {
+    public List<Object> parserFile(String file, String typeAsset) throws IOException, SAXException, ParserConfigurationException {
         File xmlFile= createXMLFile(file);
         Document doc = parserDocument(xmlFile);
-        return readDocument(doc);
+
+        if (typeAsset.equals(Menu.BOOK.toString())) {
+            return readDocument(doc);
+        } else if (typeAsset.equals(Menu.MOVIE.toString())) {
+            return readDocumentMovie(doc);
+        }
+
+        return null;
     }
 
     public Document parserDocument(File xmlFile) throws ParserConfigurationException, IOException, SAXException {
@@ -36,8 +43,8 @@ public class XMLFileParser {
         return doc;
     }
 
-    public List<Book> readDocument(Document doc) {
-        List<Book> books = new ArrayList<>();
+    public List<Object> readDocument(Document doc) {
+        List<Object> books = new ArrayList<>();
         NodeList nodeList = doc.getElementsByTagName(Menu.BOOK.toString());
 
         for (int numberNodes = 0; numberNodes < nodeList.getLength(); numberNodes++) {
@@ -51,8 +58,8 @@ public class XMLFileParser {
         return books;
     }
 
-    public List<Movie> readDocumentMovie(Document doc) {
-        List<Movie> movies = new ArrayList<>();
+    public List<Object> readDocumentMovie(Document doc) {
+        List<Object> movies = new ArrayList<>();
         NodeList nodeList = doc.getElementsByTagName(Menu.MOVIE.toString());
 
         for (int numberNodes = 0; numberNodes < nodeList.getLength(); numberNodes++) {
