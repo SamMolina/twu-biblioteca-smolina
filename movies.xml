@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE movies SYSTEM "movies.dtd">
+
+<movies>
+    <movie>
+        <name>Titanic</name>
+        <director>James Cameron</director>
+        <year>1997</year>
+        <rating>3</rating>
+    </movie>
+    <movie>
+        <name>The Lord of the Rings</name>
+        <director>Peter Jackson</director>
+        <year>2001</year>
+        <rating>5</rating>
+    </movie>
+    <movie>
+        <name>Princess Mononoke</name>
+        <director>Hayao Miyazake</director>
+        <year>1999</year>
+        <rating>2</rating>
+    </movie>
+</movies>

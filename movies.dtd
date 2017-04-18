@@ -1,0 +1,6 @@
+<!ELEMENT movies (movie*)>
+        <!ELEMENT movie (name, director, year, rating)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT director (#PCDATA)>
+        <!ELEMENT year (#PCDATA)>
+        <!ELEMENT rating (#PCDATA)>
