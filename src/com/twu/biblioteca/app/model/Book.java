@@ -1,6 +1,7 @@
 package com.twu.biblioteca.app.model;
 
-import com.twu.biblioteca.app.util.Menu;
+import com.twu.biblioteca.app.ui.Biblioteca;
+import com.twu.biblioteca.app.util.Asset;
 
 public class Book {
     private String title;
@@ -52,13 +53,16 @@ public class Book {
     }
 
     public boolean isAValidBook(Book book) {
-        if (book == null) System.out.print(Menu.BOOK_NOT_EXISTS.toString());
+        if (book == null) {
+            System.out.print(Asset.BOOK_NOT_EXISTS.toString());
+            return false;
+        }
         return true;
     }
 
     public String formatBookInformation(String title, String author, String year) {
-        return "|" + new com.twu.biblioteca.app.ui.Menu().printWhiteSpaces(title, 30) +
-                "|" + new com.twu.biblioteca.app.ui.Menu().printWhiteSpaces(author, 30) +
+        return "|" + new Biblioteca().printWhiteSpaces(title, 30) +
+                "|" + new Biblioteca().printWhiteSpaces(author, 30) +
                 "|" + year + "|\n";
     }
 

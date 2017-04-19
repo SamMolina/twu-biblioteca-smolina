@@ -1,7 +1,7 @@
 package com.twu.biblioteca.app.service;
 
 import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.util.Menu;
+import com.twu.biblioteca.app.util.Asset;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookService implements Asset {
+public class BookService implements com.twu.biblioteca.app.service.Asset {
     @Override
     public List<Object> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Object> books = new XMLFileParser().parserFile(fileName, com.twu.biblioteca.app.util.Menu.BOOK.toString());
+        List<Object> books = new XMLFileParser().parserFile(fileName, Asset.BOOK.toString());
         return books;
     }
 
@@ -29,8 +29,8 @@ public class BookService implements Asset {
 
     @Override
     public void showAssets(List assets) {
-        System.out.print(Menu.SHOW_BOOKS);
-        System.out.print(new Book().formatBookInformation(Menu.TITLE.name(), Menu.AUTHOR.name(), Menu.YEAR.name()));
+        System.out.print(Asset.SHOW_BOOKS);
+        System.out.print(new Book().formatBookInformation(Asset.TITLE.name(), Asset.AUTHOR.name(), Asset.YEAR.name()));
         for (Object asset: assets) {
             Book book = (Book) asset;
             System.out.print(new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear()));
@@ -56,29 +56,31 @@ public class BookService implements Asset {
     }
 
     @Override
-    public Object checkoutAsset(Object asset) {
+    public List checkoutAsset(List assets, Object asset) {
         Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == false) {
-                updateCheckoutAsset(book, !book.getCheckout(), com.twu.biblioteca.app.util.Menu.ENJOY_THE_BOOK.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), Asset.ENJOY_THE_BOOK.toString());
+                assets.remove(book);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), com.twu.biblioteca.app.util.Menu.BOOK_NO_AVAILABLE.toString());
+                updateCheckoutAsset(book, book.getCheckout(), Asset.BOOK_NO_AVAILABLE.toString());
             }
         }
-        return book;
+        return assets;
     }
 
     @Override
-    public Object returnAsset(Object asset) {
+    public List<Object> returnAsset(List assets, Object asset) {
        Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == true) {
-                updateCheckoutAsset(book, !book.getCheckout(), Menu.THANK_YOU_FOR_RETURNING.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), Asset.THANK_YOU_FOR_RETURNING.toString());
+                assets.add(asset);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), Menu.INVALID_RETURN.toString());
+                updateCheckoutAsset(book, book.getCheckout(), Asset.INVALID_RETURN.toString());
             }
         }
-        return book;
+        return assets;
     }
 
     @Override
@@ -86,17 +88,5 @@ public class BookService implements Asset {
         Book book = (Book) asset;
         book.setCheckout(checkout);
         System.out.print(message);
-    }
-
-    @Override
-    public List checkoutAsset(List assets, Object assetToCheckout) {
-        assets.remove(assetToCheckout);
-        return assets;
-    }
-
-    @Override
-    public List returnAsset(List assets, Object assetToReturn) {
-        assets.add(assetToReturn);
-        return assets;
     }
 }

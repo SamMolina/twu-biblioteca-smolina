@@ -2,7 +2,7 @@ package com.twu.biblioteca.app.service;
 
 import com.twu.biblioteca.app.model.Book;
 import com.twu.biblioteca.app.model.Movie;
-import com.twu.biblioteca.app.util.Menu;
+import com.twu.biblioteca.app.util.Asset;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -26,9 +26,9 @@ public class XMLFileParser {
         File xmlFile= createXMLFile(file);
         Document doc = parserDocument(xmlFile);
 
-        if (typeAsset.equals(Menu.BOOK.toString())) {
+        if (typeAsset.equals(Asset.BOOK.toString())) {
             return readDocument(doc);
-        } else if (typeAsset.equals(Menu.MOVIE.toString())) {
+        } else if (typeAsset.equals(Asset.MOVIE.toString())) {
             return readDocumentMovie(doc);
         }
 
@@ -45,7 +45,7 @@ public class XMLFileParser {
 
     public List<Object> readDocument(Document doc) {
         List<Object> books = new ArrayList<>();
-        NodeList nodeList = doc.getElementsByTagName(Menu.BOOK.toString());
+        NodeList nodeList = doc.getElementsByTagName(Asset.BOOK.toString());
 
         for (int numberNodes = 0; numberNodes < nodeList.getLength(); numberNodes++) {
             NodeList informationBook = nodeList.item(numberNodes).getChildNodes();
@@ -60,7 +60,7 @@ public class XMLFileParser {
 
     public List<Object> readDocumentMovie(Document doc) {
         List<Object> movies = new ArrayList<>();
-        NodeList nodeList = doc.getElementsByTagName(Menu.MOVIE.toString());
+        NodeList nodeList = doc.getElementsByTagName(Asset.MOVIE.toString());
 
         for (int numberNodes = 0; numberNodes < nodeList.getLength(); numberNodes++) {
             NodeList informationMovie = nodeList.item(numberNodes).getChildNodes();

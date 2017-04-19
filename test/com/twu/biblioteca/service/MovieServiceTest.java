@@ -3,7 +3,7 @@ package com.twu.biblioteca.service;
 import com.twu.biblioteca.app.model.Movie;
 import com.twu.biblioteca.app.service.MovieService;
 import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.util.Menu;
+import com.twu.biblioteca.app.util.Asset;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -26,7 +26,7 @@ public class MovieServiceTest {
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        fileName = Menu.MOVIE_FILE.toString();
+        fileName = Asset.MOVIE_FILE.toString();
 
         movieAvailableOne = new Movie("Titanic", "James Cameron", "1997", 7, false);
         movieAvailableTwo = new Movie("The Lord of the Rings", "Peter Jackson", "1997", 3, false);
@@ -35,25 +35,9 @@ public class MovieServiceTest {
 
     @Test
     public void shouldReturnAValidListOfMovies() throws ParserConfigurationException, SAXException, IOException {
-        List<Object> movies = new XMLFileParser().parserFile(fileName, Menu.MOVIE.toString());
+        List<Object> movies = new XMLFileParser().parserFile(fileName, Asset.MOVIE.toString());
 
         assertNotEquals(0, movies.size());
-    }
-
-    @Test
-    public void shouldModifyTheCheckoutValueFromAMovieWhenCheckingOutAMovie() throws Exception {
-        boolean expect = true;
-        Movie movie = (Movie) manager.checkoutAsset(movieAvailableOne);
-
-        assertEquals(expect, movie.getCheckout());
-    }
-
-    @Test
-    public void shouldModifyCheckoutValueFromAMovieWhenReturnAMovie() throws Exception {
-        boolean expected = false;
-        Movie movie = (Movie) new MovieService().returnAsset(movieNoAvailable);
-
-        assertEquals(expected, movie.getCheckout());
     }
 
     @Test
@@ -74,10 +58,9 @@ public class MovieServiceTest {
 
     @Test
     public void shouldRefreshMoviesWhenCheckoutAMovie() throws Exception {
-        List<Object> moviesExpected = new MovieService().getAssets(Menu.MOVIE_FILE.toString());
-        Movie movie = (Movie) new MovieService().checkoutAsset(movieAvailableOne);
+        List<Object> moviesExpected = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
 
-        List<Movie> moviesActual = new MovieService().checkoutAsset(moviesExpected, movie);
+        List<Movie> moviesActual = new MovieService().checkoutAsset(moviesExpected, movieAvailableOne);
         moviesExpected.remove(movieAvailableOne);
 
         assertEquals(moviesExpected, moviesActual);
@@ -85,16 +68,13 @@ public class MovieServiceTest {
 
     @Test
     public void shouldRefreshMoviesWhenReturnAMovie() throws Exception {
-        List<Object> moviesExpected = new MovieService().getAssets(Menu.MOVIE_FILE.toString());
+        List<Object> moviesExpected = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
         List<Movie> moviesActual;
 
-        Movie movieOne = (Movie) new MovieService().checkoutAsset(movieAvailableOne);
-        Movie movieTwo = (Movie) new MovieService().checkoutAsset(movieAvailableTwo);
+        moviesActual = new MovieService().checkoutAsset(moviesExpected, movieAvailableOne);
+        moviesActual = new MovieService().checkoutAsset(moviesActual, movieAvailableTwo);
 
-        moviesActual = new MovieService().checkoutAsset(moviesExpected, movieOne);
-        moviesActual = new MovieService().checkoutAsset(moviesActual, movieTwo);
-
-        moviesActual = new MovieService().returnAsset(moviesActual, movieOne);
+        moviesActual = new MovieService().returnAsset(moviesActual, movieAvailableOne);
         moviesExpected.remove(movieAvailableTwo);
 
         assertEquals(moviesExpected, moviesActual);

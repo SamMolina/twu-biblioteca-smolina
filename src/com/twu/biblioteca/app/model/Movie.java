@@ -14,6 +14,9 @@ public class Movie {
         this.rating = rating;
     }
 
+    public Movie() {
+    }
+
     public String getName() {
         return name;
     }
@@ -46,5 +49,9 @@ public class Movie {
     public boolean equals(Object object) {
         Movie movie = (Movie) object;
         return name.equals(movie.getName()) && year.equals(movie.getYear()) && director.equals(movie.getDirector()) && movie.rating == rating;
+    }
+
+    public String formatBookInformation(String name, String name1, String name2, String s) {
+        return null;
     }
 }

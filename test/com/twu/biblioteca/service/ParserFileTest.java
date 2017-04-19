@@ -1,9 +1,7 @@
 package com.twu.biblioteca.service;
 
 import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.model.Movie;
-import com.twu.biblioteca.app.util.Menu;
+import com.twu.biblioteca.app.util.Asset;
 import com.twu.biblioteca.app.util.StringsGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,8 +26,8 @@ public class ParserFileTest {
     public void setUp() {
         //System.setOut(new PrintStream(outContent));
         parser = Mockito.mock(XMLFileParser.class);
-        bookFileName = Menu.BOOK_FILE.toString();
-        movieFileName = Menu.MOVIE_FILE.toString();
+        bookFileName = Asset.BOOK_FILE.toString();
+        movieFileName = Asset.MOVIE_FILE.toString();
         invalidFileName = StringsGenerator.generateRandomChars(5);
     }
 /*
@@ -43,7 +41,7 @@ public class ParserFileTest {
         bookAvailableFour = new Book("Great Expectations","Charles Dickens", "1861", false);
         bookAvailableFive = new Book("Les Misérables","Victor Hugo", "1862", false);
         bookNoAvailable = new Book("Great Expectations","Charles Dickens", "1861", true);
-        bookFileName = Menu.BOOK_FILE.toString();
+        bookFileName = Biblioteca.BOOK_FILE.toString();
     }
 
     @Test

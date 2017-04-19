@@ -5,7 +5,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
-import java.util.*;
 
 public interface Asset<T> {
 
@@ -19,13 +18,13 @@ public interface Asset<T> {
 
     public T isAssetInAssets(List<T> assets, String assetToSearch);
 
-    public T checkoutAsset(T asset);
+    public List<T> checkoutAsset(List<T> assets, T asset);
 
-    public T returnAsset(T asset);
+    public List<T> returnAsset(List<T> assets, T asset);
 
     public void updateCheckoutAsset(T asset, boolean checkout, String message);
 
-    public List<T> checkoutAsset(List<T> assets, T assetToCheckout);
+    //public List<T> checkoutAsset(List<T> assets, T assetToCheckout);
 
-    public List<T> returnAsset(List<T> assets, T assetToReturn);
+    //public List<T> returnAsset(List<T> assets, T assetToReturn);
 }
