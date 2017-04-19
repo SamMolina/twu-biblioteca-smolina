@@ -1,5 +1,8 @@
 package com.twu.biblioteca.app.model;
 
+import com.twu.biblioteca.app.ui.Biblioteca;
+import com.twu.biblioteca.app.util.AssetConstants;
+
 public class Movie {
     private String name;
     private String year;
@@ -7,7 +10,7 @@ public class Movie {
     private int rating;
     private boolean checkout;
 
-    public Movie(String name, String year, String director, int rating, boolean checkout) {
+    public Movie(String name, String director, String year, int rating, boolean checkout) {
         this.name = name;
         this.year = year;
         this.director = director;
@@ -51,7 +54,17 @@ public class Movie {
         return name.equals(movie.getName()) && year.equals(movie.getYear()) && director.equals(movie.getDirector()) && movie.rating == rating;
     }
 
-    public String formatBookInformation(String name, String name1, String name2, String s) {
-        return null;
+    public String formatMovieInformation(String name, String director, String year, String rating) {
+        return "|" + new Biblioteca().printWhiteSpaces(name, 30) +
+                "|" + new Biblioteca().printWhiteSpaces(director, 30) +
+                "|" + year + "|" + new Biblioteca().printWhiteSpaces(rating, 6) + "|\n";
+    }
+
+    public boolean isAValidMovie(Movie movie) {
+        if (movie == null) {
+            System.out.print(AssetConstants.MOVIE_NOT_EXISTS.toString());
+            return false;
+        }
+        return true;
     }
 }

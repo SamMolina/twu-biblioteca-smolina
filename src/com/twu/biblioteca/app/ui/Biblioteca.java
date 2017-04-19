@@ -2,7 +2,8 @@ package com.twu.biblioteca.app.ui;
 
 import com.twu.biblioteca.app.service.BookService;
 import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.service.MovieService;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,7 +16,9 @@ import java.util.List;
 public class Biblioteca {
     private List<Object> books = new ArrayList<>();
     private List<Object> availableBooks = new ArrayList<>();
-    boolean fillBooks = true;
+    private List<Object> movies = new ArrayList<>();
+    private List<Object> availableMovies = new ArrayList<>();
+    boolean fillBooks = true, fillMovies = true;
 
     public void sayHello(String welcomeMessage) {
         System.out.print(welcomeMessage);
@@ -24,7 +27,7 @@ public class Biblioteca {
     public String printWhiteSpaces(String word, int length) {
         int numCharacters = word.length();
         for (int iterator = numCharacters; iterator < length; iterator ++) {
-            word += Asset.BLANK_SPACE.toString();
+            word += AssetConstants.BLANK_SPACE.toString();
         }
         return word;
     }
@@ -35,16 +38,24 @@ public class Biblioteca {
     }
 
     public int start() throws ParserConfigurationException, SAXException, IOException {
-        String option = Asset.OPTION_ZERO.toString();
+        String option = AssetConstants.OPTION_ZERO.toString();
         menu(option);
         return 0;
     }
 
     private void fillBooks() throws IOException, SAXException, ParserConfigurationException {
         if (fillBooks == true) {
-            books = new BookService().getAssets(Asset.BOOK_FILE.toString());
-            availableBooks = new BookService().getAssets(Asset.BOOK_FILE.toString());
+            books = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
+            availableBooks = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
             fillBooks = false;
+        }
+    }
+
+    private void fillMovies() throws IOException, SAXException, ParserConfigurationException {
+        if (fillMovies == true) {
+            movies = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
+            availableMovies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
+            fillMovies = false;
         }
     }
 
@@ -58,7 +69,9 @@ public class Biblioteca {
                 break;
 
             case "1":
-                printBooks();
+                System.out.printf(AssetConstants.CHOOSE_TYPE_ITEM.toString());
+                input = getInputStream();
+                printAsset(input);
                 input = getInputStream();
                 menu(input);
                 break;
@@ -69,58 +82,63 @@ public class Biblioteca {
 
             case "3":
                 response = actBook(option);
-                menu(Asset.OPTION_ZERO.toString());
+                menu(AssetConstants.OPTION_ZERO.toString());
                 break;
 
             case "4":
                 response = actBook(option);
-                menu(Asset.OPTION_ZERO.toString());
+                menu(AssetConstants.OPTION_ZERO.toString());
                 break;
 
             default:
                 response = optionDefault();
                 System.out.println(response);
-                menu(Asset.OPTION_ZERO.toString());
+                menu(AssetConstants.OPTION_ZERO.toString());
                 break;
         }
         return response;
     }
 
     public void printMenu() {
-        System.out.print(Asset.CHOOSE_OPTIONS.toString()
-                + Asset.OPTION_ONE_FULL.toString()
-                + Asset.OPTION_TWO_FULL.toString()
-                + Asset.OPTION_THREE_FULL.toString()
-                + Asset.OPTION_FOUR_FULL);
+        System.out.print(AssetConstants.CHOOSE_OPTIONS.toString()
+                + AssetConstants.OPTION_ONE_FULL.toString()
+                + AssetConstants.OPTION_TWO_FULL.toString()
+                + AssetConstants.OPTION_THREE_FULL.toString()
+                + AssetConstants.OPTION_FOUR_FULL);
     }
 
-    public void printBooks() throws ParserConfigurationException, SAXException, IOException {
-        fillBooks();
-        new BookService().showAssets(availableBooks);
+    public void printAsset(String typeAsset) throws ParserConfigurationException, SAXException, IOException {
+        if (typeAsset.equals(AssetConstants.BOOK.toString())) {
+            fillBooks();
+            new BookService().showAssets(availableBooks);
+        } else if (typeAsset.equals(AssetConstants.MOVIE.toString())) {
+            fillMovies();
+            new MovieService().showAssets(availableMovies);
+        } else {
+            System.out.printf(AssetConstants.SELECT_A_TYPE_BOOK.toString());
+            menu(AssetConstants.OPTION_ONE.toString());
+        }
     }
 
     public String exit() {
-        return Asset.OPTION_TWO.name();
+        return AssetConstants.OPTION_TWO.name();
     }
 
     public String actBook(String option) throws IOException {
-        System.out.println(Asset.ENTER_THE_BOOK_NAME.toString());
+        System.out.println(AssetConstants.ENTER_THE_BOOK_NAME.toString());
         String input = getInputStream();
         Book book = (Book) new BookService().isAssetInAssets(books, input);
 
-        if (option.equals(Asset.OPTION_THREE.toString())) {
+        if (option.equals(AssetConstants.OPTION_THREE.toString())) {
             availableBooks = new BookService().checkoutAsset(availableBooks, book);
-            return Asset.OPTION_THREE.name();
+            return AssetConstants.OPTION_THREE.name();
         } else {
             availableBooks = new BookService().returnAsset(availableBooks, book);
-            return Asset.OPTION_FOUR.name();
+            return AssetConstants.OPTION_FOUR.name();
         }
     }
 
     public String optionDefault() {
-        return Asset.SELECT_A_VALID_OPTION.toString();
-    }
-
-    public void printMovies() {
+        return AssetConstants.SELECT_A_VALID_OPTION.toString();
     }
 }

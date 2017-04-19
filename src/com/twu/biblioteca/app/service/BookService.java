@@ -1,7 +1,7 @@
 package com.twu.biblioteca.app.service;
 
 import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookService implements com.twu.biblioteca.app.service.Asset {
+public class BookService implements IAsset {
     @Override
     public List<Object> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Object> books = new XMLFileParser().parserFile(fileName, Asset.BOOK.toString());
+        List<Object> books = new XMLFileParser().parserFile(fileName, AssetConstants.BOOK.toString());
         return books;
     }
 
@@ -29,8 +29,8 @@ public class BookService implements com.twu.biblioteca.app.service.Asset {
 
     @Override
     public void showAssets(List assets) {
-        System.out.print(Asset.SHOW_BOOKS);
-        System.out.print(new Book().formatBookInformation(Asset.TITLE.name(), Asset.AUTHOR.name(), Asset.YEAR.name()));
+        System.out.print(AssetConstants.SHOW_BOOKS);
+        System.out.print(new Book().formatBookInformation(AssetConstants.TITLE.name(), AssetConstants.AUTHOR.name(), AssetConstants.YEAR.name()));
         for (Object asset: assets) {
             Book book = (Book) asset;
             System.out.print(new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear()));
@@ -60,10 +60,10 @@ public class BookService implements com.twu.biblioteca.app.service.Asset {
         Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == false) {
-                updateCheckoutAsset(book, !book.getCheckout(), Asset.ENJOY_THE_BOOK.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), AssetConstants.ENJOY_THE_BOOK.toString());
                 assets.remove(book);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), Asset.BOOK_NO_AVAILABLE.toString());
+                updateCheckoutAsset(book, book.getCheckout(), AssetConstants.BOOK_NO_AVAILABLE.toString());
             }
         }
         return assets;
@@ -74,10 +74,10 @@ public class BookService implements com.twu.biblioteca.app.service.Asset {
        Book book = (Book) asset;
         if (new Book().isAValidBook(book)) {
             if (book.getCheckout() == true) {
-                updateCheckoutAsset(book, !book.getCheckout(), Asset.THANK_YOU_FOR_RETURNING.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), AssetConstants.THANK_YOU_FOR_RETURNING.toString());
                 assets.add(asset);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), Asset.INVALID_RETURN.toString());
+                updateCheckoutAsset(book, book.getCheckout(), AssetConstants.INVALID_RETURN.toString());
             }
         }
         return assets;

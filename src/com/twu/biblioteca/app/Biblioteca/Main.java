@@ -1,7 +1,7 @@
 package com.twu.biblioteca.app.Biblioteca;
 
 import com.twu.biblioteca.app.ui.Biblioteca;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         Biblioteca biblioteca = new Biblioteca();
-        biblioteca.sayHello(Asset.WELCOME_MESSAGE.toString());
+        biblioteca.sayHello(AssetConstants.WELCOME_MESSAGE.toString());
         biblioteca.start();
     }
 }

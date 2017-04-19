@@ -3,7 +3,7 @@ package com.twu.biblioteca.service;
 import com.twu.biblioteca.app.model.Movie;
 import com.twu.biblioteca.app.service.MovieService;
 import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -26,7 +26,7 @@ public class MovieServiceTest {
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        fileName = Asset.MOVIE_FILE.toString();
+        fileName = AssetConstants.MOVIE_FILE.toString();
 
         movieAvailableOne = new Movie("Titanic", "James Cameron", "1997", 7, false);
         movieAvailableTwo = new Movie("The Lord of the Rings", "Peter Jackson", "1997", 3, false);
@@ -35,7 +35,7 @@ public class MovieServiceTest {
 
     @Test
     public void shouldReturnAValidListOfMovies() throws ParserConfigurationException, SAXException, IOException {
-        List<Object> movies = new XMLFileParser().parserFile(fileName, Asset.MOVIE.toString());
+        List<Object> movies = new XMLFileParser().parserFile(fileName, AssetConstants.MOVIE.toString());
 
         assertNotEquals(0, movies.size());
     }
@@ -58,7 +58,7 @@ public class MovieServiceTest {
 
     @Test
     public void shouldRefreshMoviesWhenCheckoutAMovie() throws Exception {
-        List<Object> moviesExpected = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
+        List<Object> moviesExpected = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
 
         List<Movie> moviesActual = new MovieService().checkoutAsset(moviesExpected, movieAvailableOne);
         moviesExpected.remove(movieAvailableOne);
@@ -68,7 +68,7 @@ public class MovieServiceTest {
 
     @Test
     public void shouldRefreshMoviesWhenReturnAMovie() throws Exception {
-        List<Object> moviesExpected = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
+        List<Object> moviesExpected = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
         List<Movie> moviesActual;
 
         moviesActual = new MovieService().checkoutAsset(moviesExpected, movieAvailableOne);

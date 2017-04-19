@@ -1,6 +1,7 @@
 package com.twu.biblioteca.app.service;
 
 import com.twu.biblioteca.app.model.Movie;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -8,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieService implements Asset{
+public class MovieService implements IAsset {
     @Override
     public List getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Object> movies = new XMLFileParser().parserFile(fileName, com.twu.biblioteca.app.util.Asset.MOVIE.toString());
+        List<Object> movies = new XMLFileParser().parserFile(fileName, AssetConstants.MOVIE.toString());
         return movies;
     }
 
@@ -31,7 +32,13 @@ public class MovieService implements Asset{
 
     @Override
     public void showAssets(List assets) {
-
+        System.out.print(AssetConstants.SHOW_MOVIES.toString());
+        System.out.print(new Movie().formatMovieInformation(AssetConstants.NAME.name(), AssetConstants.DIRECTOR.name(),
+                AssetConstants.YEAR.name(), AssetConstants.RATING.name()));
+        for (Object asset: assets) {
+            Movie movie = (Movie) asset;
+            System.out.print(new Movie().formatMovieInformation(movie.getName(), movie.getDirector(), movie.getYear(), String.valueOf(movie.getRating())));
+        }
     }
 
     @Override
@@ -58,7 +65,15 @@ public class MovieService implements Asset{
 
     @Override
     public List checkoutAsset(List assets, Object assetToCheckout) {
-        assets.remove(assetToCheckout);
+        Movie movie = (Movie) assetToCheckout;
+        if (new Movie().isAValidMovie(movie)) {
+            if (movie.getCheckout() == false) {
+                updateCheckoutAsset(movie, !movie.getCheckout(), AssetConstants.ENJOY_THE_MOVIE.toString());
+                assets.remove(movie);
+            } else {
+                updateCheckoutAsset(movie, movie.getCheckout(), AssetConstants.BOOK_NO_AVAILABLE.toString());
+            }
+        }
         return assets;
     }
 

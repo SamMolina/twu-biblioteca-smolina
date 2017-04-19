@@ -1,6 +1,6 @@
 package com.twu.biblioteca.app.util;
 
-public enum Asset {
+public enum AssetConstants {
     BOOK("book"),
     BOOK_FILE("books.xml"),
     BOOK_NO_AVAILABLE("That book is not available.\n"),
@@ -20,7 +20,7 @@ public enum Asset {
     OPTION_THREE("3"),
     OPTION_FOUR("4"),
 
-    OPTION_ONE_FULL("1. Show List Item\n"),
+    OPTION_ONE_FULL("1. Show List IAsset\n"),
     OPTION_TWO_FULL("2. Quit\n"),
     OPTION_THREE_FULL("3. Checkout book\n"),
     OPTION_FOUR_FULL("4. Return book\n"),
@@ -40,11 +40,15 @@ public enum Asset {
     INVALID_RETURN("That is not a valid book to return.\n"),
 
     MOVIE_FILE("movies.xml"),
-    MOVIE("movie");
+    MOVIE("movie"),
+    CHOOSE_TYPE_ITEM("Do you want 'book' list or 'movie' list?\n"),
+    SELECT_A_TYPE_BOOK("Enter 'book' for book list or 'movie' for movie list\n"),
+    ENJOY_THE_MOVIE("Thank you! Enjoy the movie\n"),
+    MOVIE_NOT_EXISTS("That Book doesn't exists!\n");
 
     private final String name;
 
-    Asset(String word) {
+    AssetConstants(String word) {
         this.name = word;
     }
 

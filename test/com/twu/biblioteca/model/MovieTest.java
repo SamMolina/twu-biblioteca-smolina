@@ -1,7 +1,7 @@
 package com.twu.biblioteca.model;
 
 import com.twu.biblioteca.app.model.Movie;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import com.twu.biblioteca.app.util.StringsGenerator;
 import com.twu.biblioteca.app.service.MovieService;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class MovieTest {
     @Before
     public void setUp() {
         movieAvailable = new Movie("Titanic", "James Cameron", "1997", 7, false);
-        fileName = Asset.MOVIE_FILE.toString();
+        fileName = AssetConstants.MOVIE_FILE.toString();
         movieUnavailable = StringsGenerator.generateRandomChars(5);
     }
 
@@ -40,7 +40,7 @@ public class MovieTest {
     public void shouldReturnAYearWhenCreateAMovie() {
         String expected = "1998";
 
-        Movie movie = new Movie(null, expected, null, 0, false);
+        Movie movie = new Movie(null, null, expected, 0, false);
         String actual = movie.getYear();
 
         assertEquals(expected, actual);
@@ -50,7 +50,7 @@ public class MovieTest {
     public void shouldReturnADirectorWhenCreateAMovie() {
         String expected = "Steven Spielberg";
 
-        Movie movie = new Movie(null, null, expected, 0, false);
+        Movie movie = new Movie(null, expected, null, 0, false);
         String actual = movie.getDirector();
 
         assertEquals(expected, actual);
@@ -128,7 +128,7 @@ public class MovieTest {
 
     @Test
     public void shouldReturnAMovieUsingTheNameOfTheMovie() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
+        List<Movie> movies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
 
         Movie movieExpected = movieAvailable;
         Movie movieActual = (Movie) new MovieService().isAssetInAssets(movies, movieExpected.getName());
@@ -138,7 +138,7 @@ public class MovieTest {
 
     @Test
     public void shouldReturnNullWhenEnteringAMovieNameThatNoIsInTheList() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(Asset.MOVIE_FILE.toString());
+        List<Movie> movies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
 
         Movie movieActual = (Movie) new MovieService().isAssetInAssets(movies, movieUnavailable);
 

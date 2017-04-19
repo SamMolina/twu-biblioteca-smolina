@@ -3,7 +3,7 @@ package com.twu.biblioteca.service;
 import com.twu.biblioteca.app.service.BookService;
 import com.twu.biblioteca.app.model.Book;
 import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -29,12 +29,12 @@ public class BookServiceTest {
         bookAvailableOne = new Book("The Shadow of the Wind", "Carlos Ruíz Zafón", "2001", false);
         bookAvailableTwo = new Book("The Angel's Game","Carlos Ruíz Zafón", "2009", false);
         bookNoAvailable = new Book("Great Expectations","Charles Dickens", "1861", true);
-        fileName = Asset.BOOK_FILE.toString();
+        fileName = AssetConstants.BOOK_FILE.toString();
     }
 
     @Test
     public void shouldReturnAValidListOfBooks() throws ParserConfigurationException, SAXException, IOException {
-        List<Object> books = new XMLFileParser().parserFile(fileName, Asset.BOOK.toString());
+        List<Object> books = new XMLFileParser().parserFile(fileName, AssetConstants.BOOK.toString());
 
         assertNotEquals(0, books.size());
     }
@@ -80,7 +80,7 @@ public class BookServiceTest {
 
     @Test
     public void shouldRefreshBooksWhenCheckoutABook() throws Exception {
-        List<Object> booksExpected = new BookService().getAssets(Asset.BOOK_FILE.toString());
+        List<Object> booksExpected = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
         //Book book = (Book) new BookService().checkoutAsset(null, bookAvailableOne);
 
         List<Book> booksActual = (List<Book>) new BookService().checkoutAsset(booksExpected, bookAvailableOne);
@@ -91,7 +91,7 @@ public class BookServiceTest {
 
     @Test
     public void shouldRefreshBooksWhenReturnABook() throws Exception {
-        List<Object> booksExpected = new BookService().getAssets(Asset.BOOK_FILE.toString());
+        List<Object> booksExpected = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
         List<Object> booksActual;
 
         //Book bookOne = (Book) new BookService().checkoutAsset(null, bookAvailableOne);

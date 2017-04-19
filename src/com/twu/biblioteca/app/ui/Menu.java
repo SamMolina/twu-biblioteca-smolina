@@ -1,16 +1,15 @@
 package com.twu.biblioteca.app.ui;
 
-import com.twu.biblioteca.app.service.BookService;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 
 public class Menu {
 
     public static void OptionZero() {
-        System.out.print(Asset.CHOOSE_OPTIONS.toString()
-                + Asset.OPTION_ONE_FULL.toString()
-                + Asset.OPTION_TWO_FULL.toString()
-                + Asset.OPTION_THREE_FULL.toString()
-                + Asset.OPTION_FOUR_FULL);
+        System.out.print(AssetConstants.CHOOSE_OPTIONS.toString()
+                + AssetConstants.OPTION_ONE_FULL.toString()
+                + AssetConstants.OPTION_TWO_FULL.toString()
+                + AssetConstants.OPTION_THREE_FULL.toString()
+                + AssetConstants.OPTION_FOUR_FULL);
     }
 
 }

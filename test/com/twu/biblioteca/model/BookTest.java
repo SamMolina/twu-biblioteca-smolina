@@ -1,7 +1,7 @@
 package com.twu.biblioteca.model;
 
 import com.twu.biblioteca.app.service.BookService;
-import com.twu.biblioteca.app.util.Asset;
+import com.twu.biblioteca.app.util.AssetConstants;
 import com.twu.biblioteca.app.model.Book;
 import com.twu.biblioteca.app.util.StringsGenerator;
 import org.junit.Before;
@@ -23,7 +23,7 @@ public class BookTest {
     @Before
     public void setUp() {
         bookAvailable = new Book("The Shadow of the Wind", "Carlos Ruíz Zafón", "2001", false);
-        fileName = Asset.BOOK_FILE.toString();
+        fileName = AssetConstants.BOOK_FILE.toString();
         bookUnavailable = StringsGenerator.generateRandomChars(5);
     }
 
@@ -66,7 +66,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnABookUsingTheNameOfTheBook() throws Exception {
-        List<Object> books = new BookService().getAssets(Asset.BOOK_FILE.toString());
+        List<Object> books = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
 
         Book bookExpected = bookAvailable;
         Book bookActual = (Book) new BookService().isAssetInAssets(books, bookAvailable.getTitle());
@@ -76,7 +76,7 @@ public class BookTest {
 
     @Test
     public void shouldReturnNullWhenEnteringABookNameThatNoIsInTheList() throws IOException, SAXException, ParserConfigurationException {
-        List<Object> books = new BookService().getAssets(Asset.BOOK_FILE.toString());
+        List<Object> books = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
 
         Book bookActual = (Book) new BookService().isAssetInAssets(books, bookUnavailable);
 
