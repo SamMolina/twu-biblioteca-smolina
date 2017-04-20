@@ -58,6 +58,14 @@ public class BibliotecaTest {
     }
 
     @Test
+    public void shouldLoginACustomer() {
+        String expected = BibliotecaConstants.WELCOME_MESSAGE.toString();
+        new Biblioteca().sayHello(expected);
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
     public void shouldShowTheBookList() throws IOException, SAXException, ParserConfigurationException {
         List<Object> assets = new AssetService().getAssets(fileBook, BibliotecaConstants.BOOK.toString());
 
