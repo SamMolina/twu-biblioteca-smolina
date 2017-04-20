@@ -1,18 +1,10 @@
-package com.twu.biblioteca.app.service;
+package com.twu.biblioteca.app.impl;
 
-import com.twu.biblioteca.app.model.Movie;
-import com.twu.biblioteca.app.util.AssetConstants;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MovieService implements IAsset {
+public class MovieService {
+    /*
     @Override
-    public List getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Object> movies = new XMLFileParser().parserFile(fileName, AssetConstants.MOVIE.toString());
+    public List getAssets(String fileName, String type) throws ParserConfigurationException, SAXException, IOException {
+        List<Object> movies = new XMLFileParser().parserFile(fileName, type);
         return movies;
     }
 
@@ -32,9 +24,9 @@ public class MovieService implements IAsset {
 
     @Override
     public void showAssets(List assets) {
-        System.out.print(AssetConstants.SHOW_MOVIES.toString());
-        System.out.print(new Movie().formatMovieInformation(AssetConstants.NAME.name(), AssetConstants.DIRECTOR.name(),
-                AssetConstants.YEAR.name(), AssetConstants.RATING.name()));
+        System.out.print(BibliotecaConstants.SHOW_MOVIES.toString());
+        System.out.print(new Movie().formatMovieInformation(BibliotecaConstants.NAME.name(), BibliotecaConstants.DIRECTOR.name(),
+                BibliotecaConstants.YEAR.name(), BibliotecaConstants.RATING.name()));
         for (Object asset: assets) {
             Movie movie = (Movie) asset;
             System.out.print(new Movie().formatMovieInformation(movie.getName(), movie.getDirector(), movie.getYear(), String.valueOf(movie.getRating())));
@@ -68,10 +60,10 @@ public class MovieService implements IAsset {
         Movie movie = (Movie) assetToCheckout;
         if (new Movie().isAValidMovie(movie)) {
             if (movie.getCheckout() == false) {
-                updateCheckoutAsset(movie, !movie.getCheckout(), AssetConstants.ENJOY_THE_MOVIE.toString());
+                updateCheckoutAsset(movie, !movie.getCheckout(), BibliotecaConstants.ENJOY_THE_MOVIE.toString());
                 assets.remove(movie);
             } else {
-                updateCheckoutAsset(movie, movie.getCheckout(), AssetConstants.BOOK_NO_AVAILABLE.toString());
+                updateCheckoutAsset(movie, movie.getCheckout(), BibliotecaConstants.BOOK_NO_AVAILABLE.toString());
             }
         }
         return assets;
@@ -87,4 +79,5 @@ public class MovieService implements IAsset {
     public void updateCheckoutAsset(Object asset, boolean checkout, String message) {
 
     }
+    */
 }

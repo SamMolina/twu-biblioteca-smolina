@@ -1,9 +1,10 @@
 package com.twu.biblioteca.app.ui;
 
-import com.twu.biblioteca.app.service.BookService;
+import com.twu.biblioteca.app.impl.AssetService;
+import com.twu.biblioteca.app.model.Asset;
 import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.service.MovieService;
-import com.twu.biblioteca.app.util.AssetConstants;
+import com.twu.biblioteca.app.model.Movie;
+import com.twu.biblioteca.app.util.BibliotecaConstants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,7 +28,7 @@ public class Biblioteca {
     public String printWhiteSpaces(String word, int length) {
         int numCharacters = word.length();
         for (int iterator = numCharacters; iterator < length; iterator ++) {
-            word += AssetConstants.BLANK_SPACE.toString();
+            word += BibliotecaConstants.BLANK_SPACE.toString();
         }
         return word;
     }
@@ -38,42 +39,42 @@ public class Biblioteca {
     }
 
     public int start() throws ParserConfigurationException, SAXException, IOException {
-        String option = AssetConstants.OPTION_ZERO.toString();
-        menu(option);
+        String option = BibliotecaConstants.OPTION_ZERO.toString();
+        menu(option, null);
         return 0;
     }
 
     private void fillBooks() throws IOException, SAXException, ParserConfigurationException {
         if (fillBooks == true) {
-            books = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
-            availableBooks = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
+            books = new AssetService().getAssets(new Book().getFile(), new Book().getType());
+            availableBooks = new AssetService().getAssets(new Book().getFile(), new Book().getType());
             fillBooks = false;
         }
     }
 
     private void fillMovies() throws IOException, SAXException, ParserConfigurationException {
         if (fillMovies == true) {
-            movies = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
-            availableMovies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
+            movies = new AssetService().getAssets(new Movie().getFile(), new Movie().getType());
+            availableMovies = new AssetService().getAssets(new Movie().getFile(), new Movie().getType());
             fillMovies = false;
         }
     }
 
-    public String menu(String option) throws IOException, SAXException, ParserConfigurationException {
-        String input = "", response = "";
+    public String menu(String option, String type) throws IOException, SAXException, ParserConfigurationException {
+        String input, response = "";
         switch (option) {
             case "0":
                 printMenu();
                 input = getInputStream();
-                menu(input);
+                menu(input, null);
                 break;
 
             case "1":
-                System.out.printf(AssetConstants.CHOOSE_TYPE_ITEM.toString());
+                System.out.printf(BibliotecaConstants.CHOOSE_TYPE_ITEM.toString());
+                type = getInputStream();
+                printAsset(type);
                 input = getInputStream();
-                printAsset(input);
-                input = getInputStream();
-                menu(input);
+                menu(input, type);
                 break;
 
             case "2":
@@ -81,64 +82,72 @@ public class Biblioteca {
                 break;
 
             case "3":
-                response = actBook(option);
-                menu(AssetConstants.OPTION_ZERO.toString());
+                if (type.equals(BibliotecaConstants.BOOK.toString())) {
+                    response = actAsset(option, books, availableBooks);
+                } else if (type.equals(BibliotecaConstants.MOVIE.toString())) {
+                    response = actAsset(option, movies, availableMovies);
+                }
+                menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
                 break;
 
             case "4":
-                response = actBook(option);
-                menu(AssetConstants.OPTION_ZERO.toString());
+                if (type.equals(BibliotecaConstants.BOOK.toString())) {
+                    response = actAsset(option, books, availableBooks);
+                } else if (type.equals(BibliotecaConstants.MOVIE.toString())) {
+                    response = actAsset(option, movies, availableMovies);
+                }
+                menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
                 break;
 
             default:
                 response = optionDefault();
                 System.out.println(response);
-                menu(AssetConstants.OPTION_ZERO.toString());
+                menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
                 break;
         }
         return response;
     }
 
     public void printMenu() {
-        System.out.print(AssetConstants.CHOOSE_OPTIONS.toString()
-                + AssetConstants.OPTION_ONE_FULL.toString()
-                + AssetConstants.OPTION_TWO_FULL.toString()
-                + AssetConstants.OPTION_THREE_FULL.toString()
-                + AssetConstants.OPTION_FOUR_FULL);
+        System.out.print(BibliotecaConstants.CHOOSE_OPTIONS.toString()
+                + BibliotecaConstants.OPTION_ONE_FULL.toString()
+                + BibliotecaConstants.OPTION_TWO_FULL.toString()
+                + BibliotecaConstants.OPTION_THREE_FULL.toString()
+                + BibliotecaConstants.OPTION_FOUR_FULL);
     }
 
     public void printAsset(String typeAsset) throws ParserConfigurationException, SAXException, IOException {
-        if (typeAsset.equals(AssetConstants.BOOK.toString())) {
+        if (typeAsset.equals(BibliotecaConstants.BOOK.toString())) {
             fillBooks();
-            new BookService().showAssets(availableBooks);
-        } else if (typeAsset.equals(AssetConstants.MOVIE.toString())) {
+            new AssetService().showAssets(availableBooks, typeAsset);
+        } else if (typeAsset.equals(BibliotecaConstants.MOVIE.toString())) {
             fillMovies();
-            new MovieService().showAssets(availableMovies);
+            new AssetService().showAssets(availableMovies, typeAsset);
         } else {
-            System.out.printf(AssetConstants.SELECT_A_TYPE_BOOK.toString());
-            menu(AssetConstants.OPTION_ONE.toString());
+            System.out.printf(BibliotecaConstants.SELECT_A_TYPE_BOOK.toString());
+            menu(BibliotecaConstants.OPTION_ONE.toString(), null);
         }
     }
 
     public String exit() {
-        return AssetConstants.OPTION_TWO.name();
+        return BibliotecaConstants.OPTION_TWO.name();
     }
 
-    public String actBook(String option) throws IOException {
-        System.out.println(AssetConstants.ENTER_THE_BOOK_NAME.toString());
+    public String actAsset(String option, List assets, List availableAssets) throws IOException {
+        System.out.println(BibliotecaConstants.ENTER_THE_ASSET_NAME.toString());
         String input = getInputStream();
-        Book book = (Book) new BookService().isAssetInAssets(books, input);
+        Asset asset = (Asset) new AssetService().isAssetInAssets(assets, input);
 
-        if (option.equals(AssetConstants.OPTION_THREE.toString())) {
-            availableBooks = new BookService().checkoutAsset(availableBooks, book);
-            return AssetConstants.OPTION_THREE.name();
+        if (option.equals(BibliotecaConstants.OPTION_THREE.toString())) {
+            availableAssets = new AssetService().checkoutAsset(availableAssets, asset);
+            return BibliotecaConstants.OPTION_THREE.name();
         } else {
-            availableBooks = new BookService().returnAsset(availableBooks, book);
-            return AssetConstants.OPTION_FOUR.name();
+            availableAssets = new AssetService().returnAsset(availableAssets, asset);
+            return BibliotecaConstants.OPTION_FOUR.name();
         }
     }
 
     public String optionDefault() {
-        return AssetConstants.SELECT_A_VALID_OPTION.toString();
+        return BibliotecaConstants.SELECT_A_VALID_OPTION.toString();
     }
 }

@@ -1,9 +1,9 @@
 package com.twu.biblioteca.service;
 
-import com.twu.biblioteca.app.service.BookService;
+import com.twu.biblioteca.app.impl.AssetService;
 import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.util.AssetConstants;
+import com.twu.biblioteca.app.impl.XMLFileParser;
+import com.twu.biblioteca.app.util.BibliotecaConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -21,7 +21,7 @@ public class BookServiceTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Book bookAvailableOne, bookAvailableTwo, bookNoAvailable;
     private String fileName;
-    private BookService manager = new BookService();
+    private AssetService manager = new AssetService();
 
     @Before
     public void setUp() {
@@ -29,12 +29,12 @@ public class BookServiceTest {
         bookAvailableOne = new Book("The Shadow of the Wind", "Carlos Ruíz Zafón", "2001", false);
         bookAvailableTwo = new Book("The Angel's Game","Carlos Ruíz Zafón", "2009", false);
         bookNoAvailable = new Book("Great Expectations","Charles Dickens", "1861", true);
-        fileName = AssetConstants.BOOK_FILE.toString();
+        fileName = BibliotecaConstants.BOOK_FILE.toString();
     }
 
     @Test
     public void shouldReturnAValidListOfBooks() throws ParserConfigurationException, SAXException, IOException {
-        List<Object> books = new XMLFileParser().parserFile(fileName, AssetConstants.BOOK.toString());
+        List<Object> books = new XMLFileParser().parserFile(fileName, BibliotecaConstants.BOOK.toString());
 
         assertNotEquals(0, books.size());
     }
@@ -64,8 +64,8 @@ public class BookServiceTest {
 
     @Test
     public void shouldRemoveTheCheckoutBooksFromAvailableBooks() throws Exception {
-        List<Object> assets = new BookService().getAssets(fileName);
-        List<Object> booksAvailableExpected = new BookService().getAssets(fileName);
+        List<Object> assets = new AssetService().getAssets(fileName, BibliotecaConstants.BOOK.toString());
+        List<Object> booksAvailableExpected = new AssetService().getAssets(fileName, BibliotecaConstants.BOOK.toString());
 
         booksAvailableExpected.remove(bookAvailableOne);
 
@@ -73,17 +73,17 @@ public class BookServiceTest {
         book.setCheckout(true);
         assets.set(0, book);
 
-        List<Book> booksAvailableActual = manager.getAvailableAssets(assets);
+        List<Object> booksAvailableActual = manager.getAvailableAssets(assets);
 
         assertEquals(booksAvailableExpected, booksAvailableActual);
     }
 
     @Test
     public void shouldRefreshBooksWhenCheckoutABook() throws Exception {
-        List<Object> booksExpected = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
+        List<Object> booksExpected = new AssetService().getAssets(fileName, BibliotecaConstants.BOOK.toString());
         //Book book = (Book) new BookService().checkoutAsset(null, bookAvailableOne);
 
-        List<Book> booksActual = (List<Book>) new BookService().checkoutAsset(booksExpected, bookAvailableOne);
+        List<Book> booksActual = (List<Book>) manager.checkoutAsset(booksExpected, bookAvailableOne);
         booksExpected.remove(bookAvailableOne);
 
         assertEquals(booksExpected, booksActual);
@@ -91,16 +91,16 @@ public class BookServiceTest {
 
     @Test
     public void shouldRefreshBooksWhenReturnABook() throws Exception {
-        List<Object> booksExpected = new BookService().getAssets(AssetConstants.BOOK_FILE.toString());
+        List<Object> booksExpected = new AssetService().getAssets(fileName, BibliotecaConstants.BOOK.toString());
         List<Object> booksActual;
 
         //Book bookOne = (Book) new BookService().checkoutAsset(null, bookAvailableOne);
         //Book bookTwo = (Book) new BookService().checkoutAsset(null, bookAvailableTwo);
 
-        booksActual = new BookService().checkoutAsset(booksExpected, bookAvailableOne);
-        booksActual = new BookService().checkoutAsset(booksActual, bookAvailableTwo);
+        booksActual = manager.checkoutAsset(booksExpected, bookAvailableOne);
+        booksActual = manager.checkoutAsset(booksActual, bookAvailableTwo);
 
-        booksActual = new BookService().returnAsset(booksActual, bookAvailableOne);
+        booksActual = manager.returnAsset(booksActual, bookAvailableOne);
         booksExpected.remove(bookAvailableTwo);
 
         assertEquals(booksExpected, booksActual);

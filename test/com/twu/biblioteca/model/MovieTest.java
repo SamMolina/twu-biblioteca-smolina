@@ -1,9 +1,9 @@
 package com.twu.biblioteca.model;
 
+import com.twu.biblioteca.app.impl.AssetService;
 import com.twu.biblioteca.app.model.Movie;
-import com.twu.biblioteca.app.util.AssetConstants;
+import com.twu.biblioteca.app.util.BibliotecaConstants;
 import com.twu.biblioteca.app.util.StringsGenerator;
-import com.twu.biblioteca.app.service.MovieService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,11 +18,12 @@ import static org.junit.Assert.assertNull;
 public class MovieTest {
     private Movie movieAvailable;
     private String fileName, movieUnavailable;
+    private AssetService manager = new AssetService();
 
     @Before
     public void setUp() {
         movieAvailable = new Movie("Titanic", "James Cameron", "1997", 7, false);
-        fileName = AssetConstants.MOVIE_FILE.toString();
+        fileName = BibliotecaConstants.MOVIE_FILE.toString();
         movieUnavailable = StringsGenerator.generateRandomChars(5);
     }
 
@@ -51,7 +52,7 @@ public class MovieTest {
         String expected = "Steven Spielberg";
 
         Movie movie = new Movie(null, expected, null, 0, false);
-        String actual = movie.getDirector();
+        String actual = movie.getAuthor();
 
         assertEquals(expected, actual);
     }
@@ -105,42 +106,42 @@ public class MovieTest {
 
     @Test
     public void shouldReturnTrueWhenSearchingAMovieThatIsInMovies() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(fileName);
+        List<Object> movies = manager.getAssets(fileName, BibliotecaConstants.MOVIE.toString());
         Movie movieToSearch = movieAvailable;
 
         boolean expected = true;
-        boolean actual = new MovieService().isAssetInAssets(movies, movieToSearch);
+        boolean actual = manager.isAssetInAssets(movies, movieToSearch);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnFalseWhenSearchingAMovieThatNoIsInMovies() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(fileName);
+        List<Object> movies = manager.getAssets(fileName, BibliotecaConstants.MOVIE.toString());
         Movie movieToSearch = movieAvailable;
         movieToSearch.setName(movieUnavailable);
 
         boolean expected = false;
-        boolean actual = new MovieService().isAssetInAssets(movies, movieToSearch);
+        boolean actual = manager.isAssetInAssets(movies, movieToSearch);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnAMovieUsingTheNameOfTheMovie() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
+        List<Object> movies = manager.getAssets(BibliotecaConstants.MOVIE_FILE.toString(), BibliotecaConstants.MOVIE.toString());
 
         Movie movieExpected = movieAvailable;
-        Movie movieActual = (Movie) new MovieService().isAssetInAssets(movies, movieExpected.getName());
+        Movie movieActual = (Movie) manager.isAssetInAssets(movies, movieExpected.getName());
 
         assertEquals(movieExpected, movieActual);
     }
 
     @Test
     public void shouldReturnNullWhenEnteringAMovieNameThatNoIsInTheList() throws IOException, org.xml.sax.SAXException, ParserConfigurationException {
-        List<Movie> movies = new MovieService().getAssets(AssetConstants.MOVIE_FILE.toString());
+        List<Object> movies = manager.getAssets(BibliotecaConstants.MOVIE_FILE.toString(), BibliotecaConstants.MOVIE.toString());
 
-        Movie movieActual = (Movie) new MovieService().isAssetInAssets(movies, movieUnavailable);
+        Movie movieActual = (Movie) manager.isAssetInAssets(movies, movieUnavailable);
 
         assertNull(movieActual);
     }

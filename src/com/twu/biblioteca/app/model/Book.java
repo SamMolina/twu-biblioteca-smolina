@@ -1,79 +1,38 @@
 package com.twu.biblioteca.app.model;
 
-import com.twu.biblioteca.app.ui.Biblioteca;
-import com.twu.biblioteca.app.util.AssetConstants;
+import com.twu.biblioteca.app.util.BibliotecaConstants;
 
-public class Book {
-    private String title;
-    private String author;
-    private String year;
-    private boolean checkout;
-
-    public Book(String title, String author, String year, boolean checkout) {
-        this.title = title;
-        this.author = author;
-        this.year = year;
-        this.checkout = checkout;
-    }
+public class Book extends Asset{
 
     public Book() {
-        this.checkout = false;
+        super(BibliotecaConstants.BOOK.toString(), BibliotecaConstants.BOOK_FILE.toString());
     }
 
-    public String getTitle() {
-        return title;
+    public Book(String title, String author, String year, boolean checkout) {
+        super(title, author, year, checkout, BibliotecaConstants.BOOK.toString(), BibliotecaConstants.BOOK_FILE.toString());
     }
 
-    public String getAuthor() {
-        return author;
+    public String showAsset() {
+        return BibliotecaConstants.SHOW_BOOKS.toString();
     }
 
-    public String getYear() {
-        return year;
+    public String unsuccessfulCheckout() {
+        return BibliotecaConstants.ENJOY_THE_BOOK.toString();
     }
 
-    public boolean getCheckout() {
-        return checkout;
+    public String noAvailableAsset() {
+        return BibliotecaConstants.BOOK_NO_AVAILABLE.toString();
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public String successCheckout() {
+        return BibliotecaConstants.BOOK_NOT_EXISTS.toString();
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public String successReturn() {
+        return BibliotecaConstants.THANK_YOU_FOR_RETURNING_THE_BOOK.toString();
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setCheckout(boolean checkout) {
-        this.checkout = checkout;
-    }
-
-    public boolean isAValidBook(Book book) {
-        if (book == null) {
-            System.out.print(AssetConstants.BOOK_NOT_EXISTS.toString());
-            return false;
-        }
-        return true;
-    }
-
-    public String formatBookInformation(String title, String author, String year) {
-        return "|" + new Biblioteca().printWhiteSpaces(title, 30) +
-                "|" + new Biblioteca().printWhiteSpaces(author, 30) +
-                "|" + year + "|\n";
-    }
-
-    @Override
-    public String toString() {
-        return title + "\t" + author + "\t" + year;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        Book book = (Book) object;
-        return book.title.equals(title) && book.author.equals(author) && book.year.equals(year);
+    public String unsuccessfulReturn() {
+        return BibliotecaConstants.INVALID_RETURN_BOOK.toString();
     }
 }

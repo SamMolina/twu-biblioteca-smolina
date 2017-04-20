@@ -1,7 +1,7 @@
 package com.twu.biblioteca.service;
 
-import com.twu.biblioteca.app.service.XMLFileParser;
-import com.twu.biblioteca.app.util.AssetConstants;
+import com.twu.biblioteca.app.impl.XMLFileParser;
+import com.twu.biblioteca.app.util.BibliotecaConstants;
 import com.twu.biblioteca.app.util.StringsGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +26,8 @@ public class ParserFileTest {
     public void setUp() {
         //System.setOut(new PrintStream(outContent));
         parser = Mockito.mock(XMLFileParser.class);
-        bookFileName = AssetConstants.BOOK_FILE.toString();
-        movieFileName = AssetConstants.MOVIE_FILE.toString();
+        bookFileName = BibliotecaConstants.BOOK_FILE.toString();
+        movieFileName = BibliotecaConstants.MOVIE_FILE.toString();
         invalidFileName = StringsGenerator.generateRandomChars(5);
     }
 /*

@@ -1,4 +1,4 @@
-package com.twu.biblioteca.app.service;
+package com.twu.biblioteca.app.api;
 
 import org.xml.sax.SAXException;
 
@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface IAsset<T> {
 
-    List<T> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException;
+    List<T> getAssets(String fileName, String type) throws ParserConfigurationException, SAXException, IOException;
 
     List<T> getAvailableAssets(List<T> assets);
 
-    void showAssets(List<T> assets);
+    void showAssets(List<T> assets, String typeAsset);
 
     boolean isAssetInAssets(List<T> assets, Object assetToSearch);
 

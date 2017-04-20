@@ -1,18 +1,10 @@
-package com.twu.biblioteca.app.service;
+package com.twu.biblioteca.app.impl;
 
-import com.twu.biblioteca.app.model.Book;
-import com.twu.biblioteca.app.util.AssetConstants;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class BookService implements IAsset {
+public class BookService {
+    /*
     @Override
-    public List<Object> getAssets(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        List<Object> books = new XMLFileParser().parserFile(fileName, AssetConstants.BOOK.toString());
+    public List<Object> getAssets(String fileName, String type) throws ParserConfigurationException, SAXException, IOException {
+        List<Object> books = new XMLFileParser().parserFile(fileName, type);
         return books;
     }
 
@@ -29,11 +21,11 @@ public class BookService implements IAsset {
 
     @Override
     public void showAssets(List assets) {
-        System.out.print(AssetConstants.SHOW_BOOKS);
-        System.out.print(new Book().formatBookInformation(AssetConstants.TITLE.name(), AssetConstants.AUTHOR.name(), AssetConstants.YEAR.name()));
+        System.out.print(BibliotecaConstants.SHOW_BOOKS);
+        System.out.print(new Book().formatAssetInformation(BibliotecaConstants.TITLE.name(), BibliotecaConstants.AUTHOR.name(), BibliotecaConstants.YEAR.name()));
         for (Object asset: assets) {
             Book book = (Book) asset;
-            System.out.print(new Book().formatBookInformation(book.getTitle(), book.getAuthor(), book.getYear()));
+            System.out.print(new Book().formatAssetInformation(book.getName(), book.getAuthor(), book.getYear()));
         }
     }
 
@@ -50,7 +42,7 @@ public class BookService implements IAsset {
     public Object isAssetInAssets(List assets, String assetToSearch) {
         for (Object asset: assets) {
             Book book = (Book) asset;
-            if (book.getTitle().equals(assetToSearch)) return book;
+            if (book.getName().equals(assetToSearch)) return book;
         }
         return null;
     }
@@ -58,12 +50,12 @@ public class BookService implements IAsset {
     @Override
     public List checkoutAsset(List assets, Object asset) {
         Book book = (Book) asset;
-        if (new Book().isAValidBook(book)) {
+        if (new Book().isAValidAsset(book)) {
             if (book.getCheckout() == false) {
-                updateCheckoutAsset(book, !book.getCheckout(), AssetConstants.ENJOY_THE_BOOK.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), BibliotecaConstants.ENJOY_THE_BOOK.toString());
                 assets.remove(book);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), AssetConstants.BOOK_NO_AVAILABLE.toString());
+                updateCheckoutAsset(book, book.getCheckout(), BibliotecaConstants.BOOK_NO_AVAILABLE.toString());
             }
         }
         return assets;
@@ -72,12 +64,12 @@ public class BookService implements IAsset {
     @Override
     public List<Object> returnAsset(List assets, Object asset) {
        Book book = (Book) asset;
-        if (new Book().isAValidBook(book)) {
+        if (new Book().isAValidAsset(book)) {
             if (book.getCheckout() == true) {
-                updateCheckoutAsset(book, !book.getCheckout(), AssetConstants.THANK_YOU_FOR_RETURNING.toString());
+                updateCheckoutAsset(book, !book.getCheckout(), BibliotecaConstants.THANK_YOU_FOR_RETURNING_THE_BOOK.toString());
                 assets.add(asset);
             } else {
-                updateCheckoutAsset(book, book.getCheckout(), AssetConstants.INVALID_RETURN.toString());
+                updateCheckoutAsset(book, book.getCheckout(), BibliotecaConstants.INVALID_RETURN_BOOK.toString());
             }
         }
         return assets;
@@ -89,4 +81,5 @@ public class BookService implements IAsset {
         book.setCheckout(checkout);
         System.out.print(message);
     }
+    */
 }
