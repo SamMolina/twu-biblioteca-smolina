@@ -22,10 +22,6 @@ public class User {
 
     }
 
-    public String showUserInformation() {
-        return "Name: Samantha\nEmail: smolina@thoughtworks.com\nPhone Number: 0992922991";
-    }
-
     public String getLibraryNumber() {
         return libraryNumber;
     }
@@ -44,6 +40,10 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String showUserInformation() {
+        return "Name: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber;
     }
 
     @Override

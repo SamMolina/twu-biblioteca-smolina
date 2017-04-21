@@ -14,15 +14,15 @@ public class UserService {
         return users;
     }
 
-    public boolean loginUser(String libraryNumber, String password) throws IOException, SAXException, ParserConfigurationException {
+    public User loginUser(String libraryNumber, String password) throws IOException, SAXException, ParserConfigurationException {
         List<Object> objectUsers = UserService.getCustomers();
 
         for (Object object: objectUsers) {
             User user = (User) object;
             if (user.getLibraryNumber().equals(libraryNumber) && user.getPassword().equals(password))
-                return true;
+                return user;
 
         }
-        return false;
+        return null;
     }
 }

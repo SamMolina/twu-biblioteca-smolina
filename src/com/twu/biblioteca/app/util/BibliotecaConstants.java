@@ -50,7 +50,12 @@ public enum BibliotecaConstants {
     MOVIE_NO_AVAILABLE("That movie is not available.\n"),
 
     USER_FILE("users.xml"),
-    USER("user");
+    USER("user"),
+
+    ENTER_THE_LIBRARY_NUMBER("Enter your library number:"),
+    ENTER_THE_PASSWORD("Enter your password:"),
+    CREDENTIALS_ARE_INCORRECT("The library number or password are wrong!\n"),
+    WELCOME_USER("Welcome ");
 
     private final String name;
 

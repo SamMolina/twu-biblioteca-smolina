@@ -10,14 +10,6 @@ import static org.junit.Assert.assertNotEquals;
 public class UserTest {
 
     @Test
-    public void shouldReturnInformationUser() throws Exception {
-        String expected = "Name: Samantha\nEmail: smolina@thoughtworks.com\nPhone Number: 0992922991";
-        String actual = new User().showUserInformation();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void shouldReturnTheSameUserObjectWhenCreateAnUserObjectWithTheSameFields() {
         String name = StringsGenerator.generateRandomChars(5);
         String email = StringsGenerator.generateRandomChars(5);

@@ -1,9 +1,11 @@
 package com.twu.biblioteca.app.ui;
 
 import com.twu.biblioteca.app.impl.AssetService;
+import com.twu.biblioteca.app.impl.UserService;
 import com.twu.biblioteca.app.model.Asset;
 import com.twu.biblioteca.app.model.Book;
 import com.twu.biblioteca.app.model.Movie;
+import com.twu.biblioteca.app.model.User;
 import com.twu.biblioteca.app.util.BibliotecaConstants;
 import org.xml.sax.SAXException;
 
@@ -20,6 +22,7 @@ public class Biblioteca {
     private List<Object> movies = new ArrayList<>();
     private List<Object> availableMovies = new ArrayList<>();
     boolean fillBooks = true, fillMovies = true;
+    User user = new User();
 
     public void sayHello(String welcomeMessage) {
         System.out.print(welcomeMessage);
@@ -39,9 +42,32 @@ public class Biblioteca {
     }
 
     public int start() throws ParserConfigurationException, SAXException, IOException {
-        String option = BibliotecaConstants.OPTION_ZERO.toString();
-        menu(option, null);
+        boolean login = loginUser();
+
+        if (login == true) {
+            System.out.println(BibliotecaConstants.WELCOME_USER.toString() + user.getName());
+            String option = BibliotecaConstants.OPTION_ZERO.toString();
+            menu(option, null);
+        } else {
+            System.out.println(BibliotecaConstants.CREDENTIALS_ARE_INCORRECT.toString());
+            start();
+        }
+
         return 0;
+    }
+
+    public boolean loginUser() throws IOException, ParserConfigurationException, SAXException {
+        System.out.println(BibliotecaConstants.ENTER_THE_LIBRARY_NUMBER.toString());
+        String libraryNumber = getInputStream();
+        System.out.println(BibliotecaConstants.ENTER_THE_PASSWORD.toString());
+        String password = getInputStream();
+
+        User user = new UserService().loginUser(libraryNumber, password);
+
+        if (user != null)
+            return true;
+
+        return false;
     }
 
     private void fillBooks() throws IOException, SAXException, ParserConfigurationException {

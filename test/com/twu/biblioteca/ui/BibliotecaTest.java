@@ -1,7 +1,9 @@
 package com.twu.biblioteca.ui;
 
 import com.twu.biblioteca.app.impl.AssetService;
+import com.twu.biblioteca.app.impl.XMLFileParser;
 import com.twu.biblioteca.app.model.Movie;
+import com.twu.biblioteca.app.model.User;
 import com.twu.biblioteca.app.ui.Biblioteca;
 import com.twu.biblioteca.app.util.BibliotecaConstants;
 import com.twu.biblioteca.app.model.Book;
@@ -186,7 +188,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldReturnThankYouForRetuningTheBookWhenTheTheReturningIsSuccessful() throws Exception {
+    public void shouldReturnThankYouForRetuningTheBookWhenTheTheReturningIsSuccessful() throws IOException, SAXException, ParserConfigurationException {
         List<Object> assets = new AssetService().getAssets(fileBook, BibliotecaConstants.BOOK.toString());
 
         String expected = BibliotecaConstants.THANK_YOU_FOR_RETURNING_THE_BOOK.toString();
@@ -196,7 +198,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldReturnThankYouForRetuningTheMovieWhenTheTheReturningIsSuccessful() throws Exception {
+    public void shouldReturnThankYouForRetuningTheMovieWhenTheTheReturningIsSuccessful() throws IOException, SAXException, ParserConfigurationException {
         List<Object> assets = new AssetService().getAssets(fileBook, BibliotecaConstants.MOVIE.toString());
 
         String expected = BibliotecaConstants.THANK_YOU_FOR_RETURNING_THE_MOVIE.toString();
@@ -206,7 +208,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldReturnInvalidReturningWhenTheTheReturningBookIsUnsuccessful() throws Exception {
+    public void shouldReturnInvalidReturningWhenTheTheReturningBookIsUnsuccessful() {
         String expected = BibliotecaConstants.INVALID_RETURN_BOOK.toString();
         new AssetService().returnAsset(null, bookAvailable);
 
@@ -214,7 +216,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldReturnInvalidReturningWhenTheTheReturningMovieIsUnsuccessful() throws Exception {
+    public void shouldReturnInvalidReturningWhenTheTheReturningMovieIsUnsuccessful() {
         String expected = BibliotecaConstants.INVALID_RETURN_MOVIE.toString();
         new AssetService().returnAsset(null, movieAvailable);
 
@@ -227,5 +229,18 @@ public class BibliotecaTest {
         new Book().isAValidAsset(null);
 
         assertEquals(expect, outContent.toString());
+    }
+
+    @Test
+    public void shouldReturnTheUserInformation() {
+        String name = StringsGenerator.generateRandomChars(5);
+        String email = StringsGenerator.generateRandomChars(5);
+        String phoneNumber = StringsGenerator.generateRandomChars(5);
+        User user = new User(name, email, phoneNumber, null, null);
+
+        String expected = "Name: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber;
+        String actual = user.showUserInformation();
+
+        assertEquals(expected, actual);
     }
 }
