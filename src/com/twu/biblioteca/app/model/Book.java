@@ -16,16 +16,12 @@ public class Book extends Asset{
         return BibliotecaConstants.SHOW_BOOKS.toString();
     }
 
-    public String unsuccessfulCheckout() {
-        return BibliotecaConstants.ENJOY_THE_BOOK.toString();
-    }
-
     public String noAvailableAsset() {
         return BibliotecaConstants.BOOK_NO_AVAILABLE.toString();
     }
 
     public String successCheckout() {
-        return BibliotecaConstants.BOOK_NOT_EXISTS.toString();
+        return BibliotecaConstants.ENJOY_THE_BOOK.toString();
     }
 
     public String successReturn() {
@@ -35,4 +31,6 @@ public class Book extends Asset{
     public String unsuccessfulReturn() {
         return BibliotecaConstants.INVALID_RETURN_BOOK.toString();
     }
+
+    public String notExist() { return BibliotecaConstants.BOOK_NOT_EXISTS.toString(); }
 }

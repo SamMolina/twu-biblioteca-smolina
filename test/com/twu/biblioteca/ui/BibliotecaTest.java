@@ -108,10 +108,12 @@ public class BibliotecaTest {
         expected += BibliotecaConstants.OPTION_TWO_FULL;
         expected += BibliotecaConstants.OPTION_THREE_FULL;
         expected += BibliotecaConstants.OPTION_FOUR_FULL;
-
-        biblioteca.menu(BibliotecaConstants.OPTION_ZERO.toString(), null);
+        expected += BibliotecaConstants.OPTION_FIVE_FULL;
 
         Mockito.when(biblioteca.menu(BibliotecaConstants.OPTION_ZERO.toString(), null)).thenReturn(expected);
+        new Biblioteca().printMenu();
+
+        assertEquals(expected, outContent.toString());
     }
 
     @Test
@@ -238,7 +240,7 @@ public class BibliotecaTest {
         String phoneNumber = StringsGenerator.generateRandomChars(5);
         User user = new User(name, email, phoneNumber, null, null);
 
-        String expected = "Name: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber;
+        String expected = "\nName: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber+ "\n";
         String actual = user.showUserInformation();
 
         assertEquals(expected, actual);

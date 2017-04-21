@@ -23,16 +23,12 @@ public class Movie extends Asset {
         return BibliotecaConstants.SHOW_MOVIES.toString();
     }
 
-    public String unsuccessfulCheckout() {
-        return BibliotecaConstants.ENJOY_THE_MOVIE.toString();
-    }
-
     public String noAvailableAsset() {
         return BibliotecaConstants.MOVIE_NO_AVAILABLE.toString();
     }
 
     public String successCheckout() {
-        return BibliotecaConstants.MOVIE_NOT_EXISTS.toString();
+        return BibliotecaConstants.ENJOY_THE_MOVIE.toString();
     }
 
     public String successReturn() {
@@ -42,6 +38,8 @@ public class Movie extends Asset {
     public String unsuccessfulReturn() {
         return BibliotecaConstants.INVALID_RETURN_MOVIE.toString();
     }
+
+    public String notExist() { return BibliotecaConstants.MOVIE_NOT_EXISTS.toString(); }
 
     @Override
     public boolean equals(Object object) {

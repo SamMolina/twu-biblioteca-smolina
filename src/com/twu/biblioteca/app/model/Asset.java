@@ -54,7 +54,7 @@ public class Asset {
 
     public boolean isAValidAsset(Asset asset) {
         if (asset == null) {
-            System.out.print(successCheckout());
+            System.out.print(notExist());
             return false;
         }
         return true;
@@ -83,6 +83,8 @@ public class Asset {
     public String unsuccessfulReturn() {
         return "Unsuccessful Return";
     }
+
+    public String notExist() { return "Item doesn't exist!\n"; }
 
     public String getType() {
         return type;

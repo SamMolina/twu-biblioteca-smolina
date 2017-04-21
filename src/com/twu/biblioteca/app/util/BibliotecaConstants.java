@@ -19,11 +19,13 @@ public enum BibliotecaConstants {
     OPTION_TWO("2"),
     OPTION_THREE("3"),
     OPTION_FOUR("4"),
+    OPTION_FIVE("5"),
 
     OPTION_ONE_FULL("1. Show List Items\n"),
     OPTION_TWO_FULL("2. Quit\n"),
     OPTION_THREE_FULL("3. Checkout item\n"),
     OPTION_FOUR_FULL("4. Return item\n"),
+    OPTION_FIVE_FULL("5. Show User Information\n"),
 
     BLANK_SPACE(" "),
 
@@ -54,7 +56,7 @@ public enum BibliotecaConstants {
 
     ENTER_THE_LIBRARY_NUMBER("Enter your library number:"),
     ENTER_THE_PASSWORD("Enter your password:"),
-    CREDENTIALS_ARE_INCORRECT("The library number or password are wrong!\n"),
+    CREDENTIALS_ARE_INCORRECT("The library number or/and password are wrong!\n"),
     WELCOME_USER("Welcome ");
 
     private final String name;

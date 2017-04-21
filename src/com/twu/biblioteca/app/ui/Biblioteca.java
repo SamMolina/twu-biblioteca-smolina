@@ -45,7 +45,7 @@ public class Biblioteca {
         boolean login = loginUser();
 
         if (login == true) {
-            System.out.println(BibliotecaConstants.WELCOME_USER.toString() + user.getName());
+            System.out.println(BibliotecaConstants.WELCOME_USER.toString() + user.getName() + "!\n");
             String option = BibliotecaConstants.OPTION_ZERO.toString();
             menu(option, null);
         } else {
@@ -62,7 +62,7 @@ public class Biblioteca {
         System.out.println(BibliotecaConstants.ENTER_THE_PASSWORD.toString());
         String password = getInputStream();
 
-        User user = new UserService().loginUser(libraryNumber, password);
+        user = new UserService().loginUser(libraryNumber, password);
 
         if (user != null)
             return true;
@@ -92,7 +92,7 @@ public class Biblioteca {
             case "0":
                 printMenu();
                 input = getInputStream();
-                menu(input, null);
+                menu(input, type);
                 break;
 
             case "1":
@@ -108,20 +108,25 @@ public class Biblioteca {
                 break;
 
             case "3":
-                if (type.equals(BibliotecaConstants.BOOK.toString())) {
+                if (type != null && type.equals(BibliotecaConstants.BOOK.toString())) {
                     response = actAsset(option, books, availableBooks);
-                } else if (type.equals(BibliotecaConstants.MOVIE.toString())) {
+                } else if (type != null && type.equals(BibliotecaConstants.MOVIE.toString())) {
                     response = actAsset(option, movies, availableMovies);
                 }
                 menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
                 break;
 
             case "4":
-                if (type.equals(BibliotecaConstants.BOOK.toString())) {
+                if (type != null && type.equals(BibliotecaConstants.BOOK.toString())) {
                     response = actAsset(option, books, availableBooks);
-                } else if (type.equals(BibliotecaConstants.MOVIE.toString())) {
+                } else if (type != null && type.equals(BibliotecaConstants.MOVIE.toString())) {
                     response = actAsset(option, movies, availableMovies);
                 }
+                menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
+                break;
+
+            case "5":
+                System.out.println(user.showUserInformation());
                 menu(BibliotecaConstants.OPTION_ZERO.toString(), type);
                 break;
 
@@ -139,7 +144,8 @@ public class Biblioteca {
                 + BibliotecaConstants.OPTION_ONE_FULL.toString()
                 + BibliotecaConstants.OPTION_TWO_FULL.toString()
                 + BibliotecaConstants.OPTION_THREE_FULL.toString()
-                + BibliotecaConstants.OPTION_FOUR_FULL);
+                + BibliotecaConstants.OPTION_FOUR_FULL.toString()
+                + BibliotecaConstants.OPTION_FIVE_FULL.toString());
     }
 
     public void printAsset(String typeAsset) throws ParserConfigurationException, SAXException, IOException {

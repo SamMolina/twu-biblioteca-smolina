@@ -43,7 +43,7 @@ public class User {
     }
 
     public String showUserInformation() {
-        return "Name: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber;
+        return "\nName: " + name + "\nEmail: " + email + "\nPhone Number: " + phoneNumber + "\n";
     }
 
     @Override

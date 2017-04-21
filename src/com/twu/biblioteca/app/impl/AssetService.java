@@ -75,9 +75,9 @@ public class AssetService implements IAsset {
     @Override
     public List checkoutAsset(List assets, Object assetToCheckout) {
         Asset asset = (Asset) assetToCheckout;
-        if (new Asset().isAValidAsset(asset)) {
+        if (new Asset().isAValidAsset(asset) == true) {
             if (asset.getCheckout() == false) {
-                updateCheckoutAsset(asset, !asset.getCheckout(), asset.unsuccessfulCheckout());
+                updateCheckoutAsset(asset, !asset.getCheckout(), asset.successCheckout());
                 assets.remove(asset);
             } else {
                 updateCheckoutAsset(asset, asset.getCheckout(), asset.noAvailableAsset());
@@ -89,7 +89,7 @@ public class AssetService implements IAsset {
     @Override
     public List<Object> returnAsset(List assets, Object assetToReturn) {
         Asset asset = (Asset) assetToReturn;
-        if (new Asset().isAValidAsset(asset)) {
+        if (new Asset().isAValidAsset(asset) == true) {
             if (asset.getCheckout() == true) {
                 updateCheckoutAsset(asset, !asset.getCheckout(), asset.successReturn());
                 assets.add(asset);
