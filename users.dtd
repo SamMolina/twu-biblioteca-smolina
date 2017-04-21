@@ -1,0 +1,7 @@
+<!ELEMENT users (user*)>
+        <!ELEMENT user (name, email, phoneNumber, libraryNumber, password)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT email (#PCDATA)>
+        <!ELEMENT phoneNumber (#PCDATA)>
+        <!ELEMENT libraryNumber (#PCDATA)>
+        <!ELEMENT password (#PCDATA)>

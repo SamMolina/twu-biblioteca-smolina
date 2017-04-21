@@ -2,6 +2,7 @@ package com.twu.biblioteca.app.impl;
 
 import com.twu.biblioteca.app.model.Book;
 import com.twu.biblioteca.app.model.Movie;
+import com.twu.biblioteca.app.model.User;
 import com.twu.biblioteca.app.util.BibliotecaConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -30,6 +31,8 @@ public class XMLFileParser {
             return readDocument(doc);
         } else if (typeAsset.equals(BibliotecaConstants.MOVIE.toString())) {
             return readDocumentMovie(doc);
+        } else if (typeAsset.equals(BibliotecaConstants.USER.toString())) {
+            return  readDocumentUser(doc);
         }
 
         return null;
@@ -72,5 +75,21 @@ public class XMLFileParser {
         }
 
         return movies;
+    }
+
+    public List<Object> readDocumentUser(Document doc) {
+        List<Object> users = new ArrayList<>();
+        NodeList nodeList = doc.getElementsByTagName(BibliotecaConstants.USER.toString());
+
+        for (int numberNodes = 0; numberNodes < nodeList.getLength(); numberNodes++) {
+            NodeList informationUser = nodeList.item(numberNodes).getChildNodes();
+            users.add(new User(informationUser.item(1).getTextContent(),
+                    informationUser.item(3).getTextContent(),
+                    informationUser.item(5).getTextContent(),
+                    informationUser.item(7).getTextContent(),
+                    informationUser.item(9).getTextContent()));
+        }
+
+        return users;
     }
 }

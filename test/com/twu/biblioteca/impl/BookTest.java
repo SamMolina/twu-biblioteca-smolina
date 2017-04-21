@@ -1,4 +1,4 @@
-package com.twu.biblioteca.model;
+package com.twu.biblioteca.impl;
 
 import com.twu.biblioteca.app.impl.AssetService;
 import com.twu.biblioteca.app.util.BibliotecaConstants;

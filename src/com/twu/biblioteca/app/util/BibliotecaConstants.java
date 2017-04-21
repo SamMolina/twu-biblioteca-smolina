@@ -47,7 +47,10 @@ public enum BibliotecaConstants {
     SELECT_A_TYPE_BOOK("Enter 'book' for book list or 'movie' for movie list\n"),
     ENJOY_THE_MOVIE("Thank you! Enjoy the movie\n"),
     MOVIE_NOT_EXISTS("That movie doesn't exists!\n"),
-    MOVIE_NO_AVAILABLE("That movie is not available.\n");
+    MOVIE_NO_AVAILABLE("That movie is not available.\n"),
+
+    USER_FILE("users.xml"),
+    USER("user");
 
     private final String name;
 

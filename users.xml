@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE users SYSTEM "users.dtd">
+
+<users>
+    <user>
+        <name>Samantha</name>
+        <email>smolina@thoughtworks.com</email>
+        <phoneNumber>0992922991</phoneNumber>
+        <libraryNumber>123-4567</libraryNumber>
+        <password>password</password>
+    </user>
+    <user>
+        <name>Elizabeth</name>
+        <email>evelasco@thoughtworks.com</email>
+        <phoneNumber>0997652003</phoneNumber>
+        <libraryNumber>123-4568</libraryNumber>
+        <password>password</password>
+    </user>
+</users>
